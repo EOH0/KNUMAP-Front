@@ -62,6 +62,33 @@
   border-radius: 6px;
   font-size: 1rem;
 }
+.searchInput:hover,
+.filterSelect:hover {
+  border-color: #D90E15;
+  background: #fff6f6;
+}
+
+.searchInput:focus,
+.filterSelect:focus {
+  border-color: #D90E15;
+  outline: none;
+  background: #fff6f6;
+}
+
+@media (prefers-color-scheme: dark) {
+  .searchInput:hover,
+  .filterSelect:hover {
+    border-color: #D90E15;
+    background: #2a1818;
+  }
+  .searchInput:focus,
+  .filterSelect:focus {
+    border-color: #D90E15;
+    outline: none;
+    background: #2a1818;
+  }
+}
+
 .searchBtn {
   background: #D90E15;
   color: #fff;
