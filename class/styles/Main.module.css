@@ -343,7 +343,7 @@
 }
 
 .authButton {
-  background-color: #0099aa;
+  background-color: #D90E15;
   color: white;
   padding: 12px 24px;
   border: none;
@@ -355,5 +355,5 @@
 }
 
 .authButton:hover {
-  background-color: #007a88;
+  background-color: #D90E15;
 }
