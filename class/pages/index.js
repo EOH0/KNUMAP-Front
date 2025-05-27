@@ -41,6 +41,21 @@ export default function Home() {
     }
   ]);
 
+  // 즐겨찾기 상태
+  const [favorites, setFavorites] = useState([]);
+
+   // 즐겨찾기 토글 함수
+  const toggleFavorite = (place) => {
+    if (favorites.find(f => f.id === place.id)) {
+      setFavorites(favorites.filter(f => f.id !== place.id));
+    } else {
+      setFavorites([...favorites, place]);
+    }
+  };
+
+  // 별표 색상 체크 함수
+  const isFavorite = (placeId) => favorites.some(f => f.id === placeId);
+
   return (
     <>
       <Head>
@@ -75,14 +90,7 @@ export default function Home() {
         <div className={styles.filterRow}>
           <input className={styles.searchInput} placeholder="찾으실려는 장소를 입력해주세요." />
           <button className={styles.searchBtn}>🔍</button>
-          <select className={styles.filterSelect}><option>음식</option></select>
-          <select className={styles.filterSelect}><option>문화</option></select>
-          <select className={styles.filterSelect}><option>힐링</option></select>
-          <select className={styles.filterSelect}><option>놀거리</option></select>
-          <select className={styles.filterSelect}><option>공용공간</option></select>
-          <select className={styles.filterSelect}><option>제휴</option></select>
-          <select className={styles.filterSelect}><option>맛집</option></select>
-          <button className={styles.applyBtn}>적용</button>
+          <button className={styles.searchBtn}>🔦</button>
         </div>
         <div
           className={styles.contentRow}
@@ -119,7 +127,66 @@ export default function Home() {
                       <div className={styles.placeName}>{place.name}</div>
                       <div className={styles.placeType}>{place.type}</div>
                     </div>
-                    <button className={styles.starBtn}>★</button>
+                    <button
+                      className={styles.starBtn}
+                      style={{
+                        color: isFavorite(place.id) ? "#D90E15" : "#ccc",
+                        transition: "color 0.2s"
+                      }}
+                      onClick={() => toggleFavorite(place)}
+                      aria-label="즐겨찾기"
+                    >
+                      ★
+                    </button>
+                  </div>
+                  <div className={styles.placeInfo}>
+                    <div>영업시간 <span className={styles.infoNum}>{place.openingHours}</span></div>
+                    <div>리뷰 <span className={styles.infoNum}>{place.reviewCount}명</span></div>
+                  </div>
+                  <div className={styles.placeFooter}>
+                    <button className={styles.linkBtn}>홈페이지</button>
+                    <button className={styles.linkBtn}>지도 리뷰</button>
+                  </div>
+                </div>
+              ))
+            )}
+          </section>
+
+          {/* 즐겨찾기 리스트 */}
+          <section
+            className={styles.leftPanel}
+            style={{
+              width: "600px",
+              minWidth: "320px",
+              maxWidth: "90vw",
+              marginTop: 40,
+            }}
+          >
+            <div className={styles.tabRow}>
+              <span className={styles.tabActive}>⭐ 즐겨찾기</span>
+            </div>
+            {favorites.length === 0 ? (
+              <div style={{ color: "#bbb", marginTop: 20, textAlign: "center" }}>즐겨찾기한 장소가 없습니다.</div>
+            ) : (
+              favorites.map((place) => (
+                <div className={styles.placeCard} key={place.id}>
+                  <div className={styles.placeHeader}>
+                    <img src={place.logoUrl || "/school.png"} alt="장소 로고" className={styles.placeLogo} />
+                    <div>
+                      <div className={styles.placeName}>{place.name}</div>
+                      <div className={styles.placeType}>{place.type}</div>
+                    </div>
+                    <button
+                      className={styles.starBtn}
+                      style={{
+                        color: "#D90E15",
+                        transition: "color 0.2s"
+                      }}
+                      onClick={() => toggleFavorite(place)}
+                      aria-label="즐겨찾기 해제"
+                    >
+                      ★
+                    </button>
                   </div>
                   <div className={styles.placeInfo}>
                     <div>영업시간 <span className={styles.infoNum}>{place.openingHours}</span></div>
