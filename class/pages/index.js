@@ -103,7 +103,8 @@ export default function Home() {
             }}
           >
             <div className={styles.tabRow}>
-              <button className={styles.tabActive}>인기</button>
+              {/* <button className={styles.tabActive}>인기</button> */}
+              <button>인기</button>
               <button>관심</button>
               <span className={styles.yearInfo} style={{ marginLeft: "auto" }}>기준 년도 : 2025</span>
             </div>

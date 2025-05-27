@@ -1,3 +1,4 @@
+/* --- 기본 레이아웃 --- */
 .header {
   display: flex;
   align-items: center;
@@ -90,12 +91,18 @@
 }
 .contentRow {
   display: flex;
-  gap: 32px;
+  flex-direction: column;
+  align-items: center;
   margin-top: 24px;
 }
+
+/* --- 박스형 리스트 스타일 --- */
 .leftPanel {
-  width: 370px;
+  width: 600px;
   min-width: 320px;
+  max-width: 90vw;
+  background: none;
+  padding: 0;
 }
 .tabRow {
   display: flex;
@@ -122,84 +129,169 @@
   color: #e74c3c;
   margin-left: auto;
 }
+
+/* 박스형 장소 아이템 */
 .placeCard {
   background: #fff;
   border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  padding: 18px 18px 12px 18px;
-  margin-bottom: 18px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  border-radius: 14px;
+  padding: 20px 22px 16px 22px;
+  margin-bottom: 22px;
+  box-shadow: 0 2px 12px rgba(217, 14, 21, 0.06);
+  transition: box-shadow 0.18s, border 0.18s, transform 0.12s;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.placeCard:hover {
+  box-shadow: 0 4px 20px rgba(217, 14, 21, 0.13);
+  border: 1.5px solid #D90E15;
+  transform: translateY(-2px) scale(1.01);
+  background: #fff6f6;
 }
 .placeHeader {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  gap: 16px;
 }
 .placeLogo {
-  width: 48px;
-  height: 48px;
-  margin-right: 14px;
-  border-radius: 50%;
+  width: 54px;
+  height: 54px;
+  border-radius: 12px;
   background: #f5f7fa;
-  object-fit: contain;
+  object-fit: cover;
+  border: 1px solid #eee;
 }
 .placeName {
-  font-size: 1.2rem;
+  font-size: 1.18rem;
   font-weight: bold;
   margin-bottom: 2px;
 }
 .placeType {
-  font-size: 0.95rem;
+  font-size: 0.97rem;
   color: #888;
 }
 .starBtn {
   margin-left: auto;
   background: none;
   border: none;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   color: #f1c40f;
   cursor: pointer;
+  transition: transform 0.1s;
+}
+.starBtn:hover {
+  transform: scale(1.2);
 }
 .placeInfo {
   display: flex;
-  gap: 18px;
+  gap: 24px;
   font-size: 1rem;
-  margin-bottom: 10px;
+  color: #555;
+  margin-left: 70px;
 }
 .infoNum {
-  color: #2F3841;
+  color: #D90E15;
   font-weight: bold;
   margin-left: 4px;
 }
 .placeFooter {
   display: flex;
-  gap: 10px;
+  gap: 8px;
+  margin-left: 70px;
 }
 .linkBtn {
-  background: #f5f7fa;
-  border: 1px solid #e5e7eb;
+  background: none;
+  border: 1px solid #D90E15;
   border-radius: 6px;
-  padding: 6px 14px;
-  font-size: 0.95rem;
-  color: #2F3841;
+  padding: 5px 14px;
+  font-size: 0.97rem;
+  color: #D90E15;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s, color 0.2s;
 }
 .linkBtn:hover {
-  background: #ffeaea;
+  background: #D90E15;
+  color: #fff;
 }
-.mapPanel {
-  flex: 1;
-  min-width: 400px;
-}
-.mapArea {
-  width: 100%;
-  height: 540px;
-  background: #e5e7eb;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.3rem;
+
+/* --- 다크모드 스타일 --- */
+@media (prefers-color-scheme: dark) {
+  .header {
+    background: #23272a;
+    border-bottom: 1px solid #333;
+  }
+  .logo {
+    color: #D90E15;
+  }
+  .menu button {
+    color: #f1f1f1;
+  }
+  .userMenu {
+    color: #bbb;
+  }
+  .userMenu a {
+    color: #D90E15;
+  }
+  .main {
+    background: #181a1b;
+    color: #f1f1f1;
+  }
+  .filterRow {
+    background: #23272a;
+    border: 1px solid #333;
+  }
+  .searchInput, .filterSelect {
+    background: #23272a;
+    color: #f1f1f1;
+    border: 1px solid #444;
+  }
+  .searchBtn, .applyBtn {
+    background: #D90E15;
+    color: #fff;
+  }
+  .leftPanel {
+    background: none;
+  }
+  .placeCard {
+    background: #23272a;
+    border: 1.5px solid #333;   /* 기존: #D90E15 → #333 */
+    color: #f1f1f1;
+    box-shadow: 0 2px 12px rgba(217, 14, 21, 0.10);
+  }
+  .placeCard:hover {
+    background: #2a1818;
+    box-shadow: 0 4px 20px rgba(217, 14, 21, 0.18);
+    border: 1.5px solid #D90E15; /* hover 시만 빨간색 강조(원하면 유지, 아니면 #444 등으로) */
+  }
+  .placeLogo {
+    background: #181a1b;
+    border: 1px solid #333;
+  }
+  .tabRow button {
+    color: #bbb;
+    background: none;
+  }
+  .tabActive {
+    background: #D90E15;
+    color: #fff !important;
+  }
+  .yearInfo {
+    color: #ff7675;
+  }
+  .linkBtn {
+    background: none;
+    color: #D90E15;
+    border: 1px solid #D90E15;
+  }
+  .linkBtn:hover {
+    background: #D90E15;
+    color: #fff;
+  }
+  .starBtn {
+    color: #ffe066;
+  }
+  .infoNum {
+    color: #D90E15;
+  }
 }
