@@ -1,7 +1,9 @@
 import Head from "next/head";
-import { useState } from "react";
 import { useRouter } from "next/router";
 import styles from "../styles/Main.module.css";
+import { useEffect, useState } from "react";
+import { auth } from "../lib/firebase"; // Firebase 설정 위치에 따라 경로 조정
+import { onAuthStateChanged } from "firebase/auth";
 
 // export default function Home() {
 //   // 장소 리스트 상태
@@ -21,6 +23,14 @@ import styles from "../styles/Main.module.css";
 
 export default function Home() {
   const router = useRouter();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      setUser(firebaseUser);
+    });
+    return () => unsubscribe();
+  }, []);
 
   const [places, setPlaces] = useState([
     {
@@ -43,31 +53,45 @@ export default function Home() {
 
   return (
     <>
-      <Head>
-        <title>KNUMAP</title>
-        <meta name="description" content="KNUMAP 메인화면" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      {/* 상단 네비게이션 */}
+      <Head>{/* 생략 */}</Head>
       <header className={styles.header}>
-        <div
-          className={styles.logo}
-          style={{ cursor: "pointer" }}
-          onClick={() => router.push("/")}
-        >
-          KNUMAP
-        </div>
+        <div className={styles.logo} onClick={() => router.push("/")}>KNUMAP</div>
         <nav className={styles.menu}>
-          <button onClick={() => router.push("/partner")}>제휴</button>
-          <button onClick={() => router.push("/social")}>소셜</button>
-          <button onClick={() => router.push("/favorite")}>즐겨찾기</button>
+          {/* 생략 */}
         </nav>
         <div className={styles.userMenu}>
-          <a href="#" onClick={e => {e.preventDefault(); router.push("/login");}}>로그인</a> |{" "}
-          <a href="#" onClick={e => {e.preventDefault(); router.push("/signup");}}>회원가입</a>
+          {user ? (
+            <>
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  router.push("/profile");
+                }}
+                style={{ marginRight: 8 }}
+              >
+                내 정보
+              </a>
+              <span style={{ marginRight: 8 }}><strong>{user.email}</strong></span>
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  auth.signOut().then(() => router.reload());
+                }}
+              >
+                로그아웃
+              </a>
+            </>
+          ) : (
+            <>
+              <a href="#" onClick={(e) => { e.preventDefault(); router.push("/login"); }}>로그인</a> |{" "}
+              <a href="#" onClick={(e) => { e.preventDefault(); router.push("/signup"); }}>회원가입</a>
+            </>
+          )}
         </div>
       </header>
+
 
       {/* 메인 컨텐츠 */}
       <main className={styles.main}>
