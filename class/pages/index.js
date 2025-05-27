@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import styles from "../styles/Main.module.css";
 
@@ -41,8 +41,19 @@ export default function Home() {
     }
   ]);
 
-  // 즐겨찾기 상태
-  const [favorites, setFavorites] = useState([]);
+  // 1. localStorage에서 즐겨찾기 불러오기
+  const [favorites, setFavorites] = useState(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("favorites");
+      return saved ? JSON.parse(saved) : [];
+    }
+    return [];
+  });
+
+  // 2. 즐겨찾기 변경 시 localStorage에 저장
+  useEffect(() => {
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  }, [favorites]);
 
    // 즐겨찾기 토글 함수
   const toggleFavorite = (place) => {
@@ -55,6 +66,14 @@ export default function Home() {
 
   // 별표 색상 체크 함수
   const isFavorite = (placeId) => favorites.some(f => f.id === placeId);
+
+  // 즐겨찾기 페이지로 이동하며 데이터 전달
+  const goToFavorite = () => {
+    router.push({
+      pathname: "/favorite",
+      query: { data: encodeURIComponent(JSON.stringify(favorites)) }
+    });
+  };
 
   return (
     <>
@@ -76,7 +95,7 @@ export default function Home() {
         <nav className={styles.menu}>
           <button onClick={() => router.push("/partner")}>제휴</button>
           <button onClick={() => router.push("/social")}>소셜</button>
-          <button onClick={() => router.push("/favorite")}>즐겨찾기</button>
+          <button onClick={goToFavorite}>즐겨찾기</button>
         </nav>
         <div className={styles.userMenu}>
           <a href="#" onClick={e => {e.preventDefault(); router.push("/login");}}>로그인</a> |{" "}
@@ -111,7 +130,7 @@ export default function Home() {
             }}
           >
             <div className={styles.tabRow}>
-              <button className={styles.tabActive}>인기</button>
+              <button>인기</button>
               <button>관심</button>
               <span className={styles.yearInfo} style={{ marginLeft: "auto" }}>기준 년도 : 2025</span>
             </div>
@@ -135,55 +154,6 @@ export default function Home() {
                       }}
                       onClick={() => toggleFavorite(place)}
                       aria-label="즐겨찾기"
-                    >
-                      ★
-                    </button>
-                  </div>
-                  <div className={styles.placeInfo}>
-                    <div>영업시간 <span className={styles.infoNum}>{place.openingHours}</span></div>
-                    <div>리뷰 <span className={styles.infoNum}>{place.reviewCount}명</span></div>
-                  </div>
-                  <div className={styles.placeFooter}>
-                    <button className={styles.linkBtn}>홈페이지</button>
-                    <button className={styles.linkBtn}>지도 리뷰</button>
-                  </div>
-                </div>
-              ))
-            )}
-          </section>
-
-          {/* 즐겨찾기 리스트 */}
-          <section
-            className={styles.leftPanel}
-            style={{
-              width: "600px",
-              minWidth: "320px",
-              maxWidth: "90vw",
-              marginTop: 40,
-            }}
-          >
-            <div className={styles.tabRow}>
-              <span className={styles.tabActive}>⭐ 즐겨찾기</span>
-            </div>
-            {favorites.length === 0 ? (
-              <div style={{ color: "#bbb", marginTop: 20, textAlign: "center" }}>즐겨찾기한 장소가 없습니다.</div>
-            ) : (
-              favorites.map((place) => (
-                <div className={styles.placeCard} key={place.id}>
-                  <div className={styles.placeHeader}>
-                    <img src={place.logoUrl || "/school.png"} alt="장소 로고" className={styles.placeLogo} />
-                    <div>
-                      <div className={styles.placeName}>{place.name}</div>
-                      <div className={styles.placeType}>{place.type}</div>
-                    </div>
-                    <button
-                      className={styles.starBtn}
-                      style={{
-                        color: "#D90E15",
-                        transition: "color 0.2s"
-                      }}
-                      onClick={() => toggleFavorite(place)}
-                      aria-label="즐겨찾기 해제"
                     >
                       ★
                     </button>
