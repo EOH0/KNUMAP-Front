@@ -10,7 +10,7 @@
 .logo {
   font-size: 2rem;
   font-weight: bold;
-  color: #0099a8;
+  color: #D90E15;
   letter-spacing: 2px;
 }
 .menu button {
@@ -27,7 +27,7 @@
   color: #888;
 }
 .userMenu a {
-  color: #0099a8;
+  color: #D90E15;
   text-decoration: none;
   margin: 0 2px;
 }
@@ -62,7 +62,7 @@
   font-size: 1rem;
 }
 .searchBtn {
-  background: #0099a8;
+  background: #D90E15;
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -79,7 +79,7 @@
   background: #fff;
 }
 .applyBtn {
-  background: #0099a8;
+  background: #D90E15;
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -114,7 +114,7 @@
   color: #888;
 }
 .tabActive {
-  background: #0099a8;
+  background: #D90E15;
   color: #fff !important;
 }
 .yearInfo {
@@ -167,7 +167,7 @@
   margin-bottom: 10px;
 }
 .infoNum {
-  color: #0099a8;
+  color: #2F3841;
   font-weight: bold;
   margin-left: 4px;
 }
@@ -181,12 +181,12 @@
   border-radius: 6px;
   padding: 6px 14px;
   font-size: 0.95rem;
-  color: #0099a8;
+  color: #2F3841;
   cursor: pointer;
   transition: background 0.2s;
 }
 .linkBtn:hover {
-  background: #e0f7fa;
+  background: #ffeaea;
 }
 .mapPanel {
   flex: 1;
