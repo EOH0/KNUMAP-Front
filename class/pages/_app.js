@@ -1,18 +1,14 @@
-// pages/_app.js
-import "@/styles/globals.css";
-import { createContext, useEffect, useState } from "react";
-import { onAuthStateChanged } from "firebase/auth";
+import { useState, useEffect } from "react";
+import { createContext } from "react";
+import { UserContext } from "../lib/UserContext";
 import { auth } from "../lib/firebase";
-
-export const UserContext = createContext(null);
+import { onAuthStateChanged } from "firebase/auth";
 
 export default function App({ Component, pageProps }) {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
+    const unsubscribe = onAuthStateChanged(auth, setUser);
     return () => unsubscribe();
   }, []);
 

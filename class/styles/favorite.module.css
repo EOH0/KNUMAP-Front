@@ -1,9 +1,9 @@
 /* 즐겨찾기 그리드 스타일 */
 .favoriteGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 28px 22px;
-  justify-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
   margin: 32px 0 0 0;
   padding: 0;
 }
