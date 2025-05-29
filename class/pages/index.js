@@ -28,9 +28,7 @@ import { auth } from "../lib/firebase";
 
 export default function Home() {
   const router = useRouter();
-  const user = useContext(UserContext);
 
-<<<<<<< HEAD
   // 로그인 성공시 로그아웃 기능
   const user = useContext(UserContext);
 
@@ -45,34 +43,6 @@ export default function Home() {
   };
 
   // 1. localStorage에서 즐겨찾기 불러오기
-=======
-  // 유저별 즐겨찾기 key
-  const favoritesKey = user ? `favorites_${user.uid}` : "favorites_guest";
-
-  // Firebase 로그인 상태 감지
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-      setUser(firebaseUser);
-    });
-    return () => unsubscribe();
-  }, []);
-
-  // 로그아웃 함수
-  const handleLogout = async () => {
-    await signOut(auth);
-    setUser(null);
-  };
-  
-  const [places, setPlaces] = useState([]);
-
-  useEffect(() => {
-    fetch("/data/places.json")
-      .then(res => res.json())
-      .then(data => setPlaces(data));
-  }, []);
-
-  // 1. localStorage에서 즐겨찾기 불러오기 (유저별)
->>>>>>> 669ba63237f86dc6adabe4db474da41162a2b5a1
   const [favorites, setFavorites] = useState(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem(favoritesKey);
