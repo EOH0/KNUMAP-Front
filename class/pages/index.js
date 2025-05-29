@@ -2,6 +2,10 @@ import Head from "next/head";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import styles from "../styles/Main.module.css";
+import { useContext } from "react";
+import { UserContext } from "../lib/UserContext";
+import { signOut } from "firebase/auth";
+import { auth } from "../lib/firebase";
 
 // export default function Home() {
 //   // 장소 리스트 상태
@@ -40,6 +44,19 @@ export default function Home() {
       logoUrl: ""
     }
   ]);
+
+  // 로그인 성공시 로그아웃 기능
+  const user = useContext(UserContext);
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      alert("로그아웃 되었습니다.");
+      router.push("/");
+    } catch (err) {
+      alert("로그아웃 실패: " + err.message);
+    }
+  };
 
   // 1. localStorage에서 즐겨찾기 불러오기
   const [favorites, setFavorites] = useState(() => {
@@ -98,8 +115,17 @@ export default function Home() {
           <button onClick={goToFavorite}>즐겨찾기</button>
         </nav>
         <div className={styles.userMenu}>
-          <a href="#" onClick={e => {e.preventDefault(); router.push("/login");}}>로그인</a> |{" "}
-          <a href="#" onClick={e => {e.preventDefault(); router.push("/signup");}}>회원가입</a>
+          {user ? (
+            <>
+              <a href="#" onClick={e => {e.preventDefault(); router.push("/profile");}}>내 정보</a> |{" "}
+              <a href="#" onClick={e => {e.preventDefault(); handleLogout();}}>로그아웃</a>
+            </>
+          ) : (
+            <>
+              <a href="#" onClick={e => {e.preventDefault(); router.push("/login");}}>로그인</a> |{" "}
+              <a href="#" onClick={e => {e.preventDefault(); router.push("/signup");}}>회원가입</a>
+            </>
+          )}
         </div>
       </header>
 
