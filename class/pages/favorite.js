@@ -1,6 +1,8 @@
 import { useRouter } from "next/router";
 import { useEffect, useState, useContext } from "react";
 import { UserContext } from "../lib/UserContext";
+import { signOut } from "firebase/auth";
+import { auth } from "../lib/firebase";
 import mainStyles from "../styles/Main.module.css";
 import styles from "../styles/favorite.module.css";
 
@@ -18,7 +20,6 @@ export default function Favorite() {
         setFavorites([]);
       }
     } else {
-      // localStorage에서 불러오기 (새로고침 대비)
       if (typeof window !== "undefined") {
         const saved = localStorage.getItem(favoritesKey);
         setFavorites(saved ? JSON.parse(saved) : []);
@@ -27,7 +28,7 @@ export default function Favorite() {
   }, [router.query.data, favoritesKey]);
 
   const removeFavorite = (placeId) => {
-    const updated = favorites.filter(f => f.id !== placeId);
+    const updated = favorites.filter((f) => f.id !== placeId);
     setFavorites(updated);
     if (typeof window !== "undefined") {
       localStorage.setItem(favoritesKey, JSON.stringify(updated));
@@ -36,11 +37,11 @@ export default function Favorite() {
 
   const handleLogout = async () => {
     await signOut(auth);
-    // 로그아웃 후 새로고침 또는 메인으로 이동
     router.push("/");
   };
 
   return (
+<<<<<<< HEAD
 <<<<<<< HEAD
     <>
       {/* 상단 네비게이션 */}
@@ -104,6 +105,9 @@ export default function Favorite() {
               즐겨찾기한 장소가 없습니다.
 =======
     <main className={styles.main}>s
+=======
+    <main className={styles.main}>
+>>>>>>> 8e31c777f8ce37b38637415668660c3112e67972
       <div className={styles.pageTitle}>⭐ 즐겨찾기</div>
       <section className={styles.leftPanel}>
         {favorites.length === 0 ? (
@@ -114,6 +118,7 @@ export default function Favorite() {
           favorites.map((place) => (
             <div className={styles.placeCard} key={place.id}>
               <div className={styles.placeHeader}>
+<<<<<<< HEAD
                 <img src={place.logoUrl || "/school.png"} alt="장소 로고" className={styles.placeLogo} />
                 <div>
                   <div className={styles.placeName}>{place.name}</div>
@@ -148,20 +153,44 @@ export default function Favorite() {
                   >
                     ★
                   </button>
+=======
+                <img
+                  src={place.logoUrl || "/school.png"}
+                  alt="장소 로고"
+                  className={styles.placeLogo}
+                />
+                <div>
+                  <div className={styles.placeName}>{place.name}</div>
+                  <div className={styles.placeType}>{place.type}</div>
+>>>>>>> 8e31c777f8ce37b38637415668660c3112e67972
                 </div>
-                <div className={styles.placeInfo}>
-                  <div>영업시간 <span className={styles.infoNum}>{place.openingHours}</span></div>
-                  <div>리뷰 <span className={styles.infoNum}>{place.reviewCount}명</span></div>
+                <button
+                  className={styles.starBtn}
+                  style={{ color: "#D90E15", transition: "color 0.2s" }}
+                  onClick={() => removeFavorite(place.id)}
+                  aria-label="즐겨찾기 해제"
+                >
+                  ★
+                </button>
+              </div>
+              <div className={styles.placeInfo}>
+                <div>
+                  영업시간{" "}
+                  <span className={styles.infoNum}>{place.openingHours}</span>
                 </div>
-                <div className={styles.placeFooter}>
-                  <button className={styles.linkBtn}>홈페이지</button>
-                  <button className={styles.linkBtn}>지도 리뷰</button>
+                <div>
+                  리뷰{" "}
+                  <span className={styles.infoNum}>{place.reviewCount}명</span>
                 </div>
               </div>
-            ))
-          )}
-        </div>
-      </main>
-    </>
+              <div className={styles.placeFooter}>
+                <button className={styles.linkBtn}>홈페이지</button>
+                <button className={styles.linkBtn}>지도 리뷰</button>
+              </div>
+            </div>
+          ))
+        )}
+      </section>
+    </main>
   );
 }
