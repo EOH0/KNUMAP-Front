@@ -17,7 +17,7 @@ export default function Favorite() {
   }, [router.query.data]);
 
   return (
-    <main className={styles.main}>
+    <main className={styles.main}>s
       <div className={styles.pageTitle}>⭐ 즐겨찾기</div>
       <section className={styles.leftPanel}>
         {favorites.length === 0 ? (
