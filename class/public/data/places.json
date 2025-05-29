@@ -1,107 +1,702 @@
 [
   {
-    "name": "더블업홀덤펍 경북대점",
-    "phone": "0503-7150-6480",
-    "url": "http://place.map.kakao.com/765883828",
-    "openingHours": "정보 없음",
-    "reviewCount": "0"
+    "name": "모래케이크",
+    "phone": "010-8365-3686",
+    "url": "http://place.map.kakao.com/1301588655",
+    "위치": "정문",
+    "분야": "카페"
   },
   {
-    "name": "공차 경북대점",
-    "phone": "053-959-0303",
-    "url": "http://place.map.kakao.com/26620945",
-    "openingHours": "정보 없음",
-    "reviewCount": "0"
+    "name": "우드맥",
+    "phone": "053-958-5290",
+    "url": "http://place.map.kakao.com/883859914",
+    "위치": "정문",
+    "분야": "카페"
   },
   {
-    "name": "투썸플레이스 대구경북대점",
-    "phone": "053-953-9353",
-    "url": "http://place.map.kakao.com/27401180",
-    "openingHours": "정보 없음",
-    "reviewCount": "0"
+    "name": "해쉬커피 경북대정문점",
+    "phone": "050720871815",
+    "url": "http://place.map.kakao.com/279956399",
+    "위치": "정문",
+    "분야": "카페"
   },
   {
-    "name": "스타벅스 경북대점",
-    "phone": "1522-3232",
-    "url": "http://place.map.kakao.com/17884722",
-    "openingHours": "정보 없음",
-    "reviewCount": "0"
+    "name": "빽다방 경북대정문점",
+    "phone": "053-959-6151",
+    "url": "http://place.map.kakao.com/27392978",
+    "위치": "정문",
+    "분야": "카페"
   },
   {
-    "name": "아틀리에빈 경북대점",
-    "phone": "053-959-1306",
-    "url": "http://place.map.kakao.com/120094744",
-    "openingHours": "정보 없음",
-    "reviewCount": "0"
+    "name": "레코디안",
+    "phone": "053-939-9396",
+    "url": "http://place.map.kakao.com/20174238",
+    "위치": "정문",
+    "분야": "카페"
   },
   {
-    "name": "모두의카페다다름",
+    "name": "백주부김밥떡볶이",
+    "phone": "010-3348-5420",
+    "url": "http://place.map.kakao.com/467490523",
+    "위치": "정문",
+    "분야": "음식점"
+  },
+  {
+    "name": "원할머니보쌈족발 대구경대배달점",
+    "phone": "053-957-5779",
+    "url": "http://place.map.kakao.com/1701565597",
+    "위치": "정문",
+    "분야": "음식점"
+  },
+  {
+    "name": "땅땅치킨 신암점",
+    "phone": "053-958-6464",
+    "url": "http://place.map.kakao.com/13269743",
+    "위치": "정문",
+    "분야": "음식점"
+  },
+  {
+    "name": "한솥도시락 경북대정문점",
+    "phone": "053-358-1446",
+    "url": "http://place.map.kakao.com/16929212",
+    "위치": "정문",
+    "분야": "음식점"
+  },
+  {
+    "name": "샐러디아 경북대점",
+    "phone": "053-955-9777",
+    "url": "http://place.map.kakao.com/164846126",
+    "위치": "정문",
+    "분야": "음식점"
+  },
+  {
+    "name": "GS25 경북대정문점",
+    "phone": "053-954-0982",
+    "url": "http://place.map.kakao.com/20037800",
+    "위치": "정문",
+    "분야": "편의점"
+  },
+  {
+    "name": "CU 경대정문점",
+    "phone": "053-958-0385",
+    "url": "http://place.map.kakao.com/19198515",
+    "위치": "정문",
+    "분야": "편의점"
+  },
+  {
+    "name": "더쪽",
+    "phone": "053-944-0213",
+    "url": "http://place.map.kakao.com/27446010",
+    "위치": "쪽문",
+    "분야": "카페"
+  },
+  {
+    "name": "빈트",
     "phone": "전화번호 없음",
-    "url": "http://place.map.kakao.com/1155246455",
-    "openingHours": "정보 없음",
-    "reviewCount": "0"
+    "url": "http://place.map.kakao.com/1290987981",
+    "위치": "쪽문",
+    "분야": "카페"
   },
   {
-    "name": "썸카페",
+    "name": "키아누",
+    "phone": "010-4909-7674",
+    "url": "http://place.map.kakao.com/2030860635",
+    "위치": "쪽문",
+    "분야": "카페"
+  },
+  {
+    "name": "몬스터커피 경북대남문점",
+    "phone": "053-939-9933",
+    "url": "http://place.map.kakao.com/1108332845",
+    "위치": "쪽문",
+    "분야": "카페"
+  },
+  {
+    "name": "결정적 순간",
+    "phone": "010-4084-9062",
+    "url": "http://place.map.kakao.com/664679576",
+    "위치": "쪽문",
+    "분야": "카페"
+  },
+  {
+    "name": "뽀근닥 경북대점",
+    "phone": "070-7629-0102",
+    "url": "http://place.map.kakao.com/2074291341",
+    "위치": "쪽문",
+    "분야": "음식점"
+  },
+  {
+    "name": "쪽문분식",
+    "phone": "053-943-5612",
+    "url": "http://place.map.kakao.com/21367635",
+    "위치": "쪽문",
+    "분야": "음식점"
+  },
+  {
+    "name": "맘스터치 대구대현점",
+    "phone": "053-955-4242",
+    "url": "http://place.map.kakao.com/26499635",
+    "위치": "쪽문",
+    "분야": "음식점"
+  },
+  {
+    "name": "통큰할매순대국 대현점",
+    "phone": "053-958-5351",
+    "url": "http://place.map.kakao.com/2064404591",
+    "위치": "쪽문",
+    "분야": "음식점"
+  },
+  {
+    "name": "따띠삼겹 대구경북대점",
+    "phone": "0507-1419-0079",
+    "url": "http://place.map.kakao.com/1958081968",
+    "위치": "쪽문",
+    "분야": "음식점"
+  },
+  {
+    "name": "GS25 경대기숙사점",
+    "phone": "053-955-3852",
+    "url": "http://place.map.kakao.com/20151780",
+    "위치": "쪽문",
+    "분야": "편의점"
+  },
+  {
+    "name": "GS25 경대대구캠퍼스점",
+    "phone": "080-999-5425",
+    "url": "http://place.map.kakao.com/1869423519",
+    "위치": "쪽문",
+    "분야": "편의점"
+  },
+  {
+    "name": "이마트24 경북대남문점",
+    "phone": "053-395-3319",
+    "url": "http://place.map.kakao.com/1768589918",
+    "위치": "쪽문",
+    "분야": "편의점"
+  },
+  {
+    "name": "CU 대현원룸점",
+    "phone": "053-939-7773",
+    "url": "http://place.map.kakao.com/17899789",
+    "위치": "쪽문",
+    "분야": "편의점"
+  },
+  {
+    "name": "GS25 대구경대로점",
+    "phone": "080-999-5425",
+    "url": "http://place.map.kakao.com/222491770",
+    "위치": "쪽문",
+    "분야": "편의점"
+  },
+  {
+    "name": "워킹커피",
+    "phone": "053-355-1233",
+    "url": "http://place.map.kakao.com/20479795",
+    "위치": "서문",
+    "분야": "카페"
+  },
+  {
+    "name": "상화주조로터스커피로스터리",
+    "phone": "053-943-4545",
+    "url": "http://place.map.kakao.com/1347702023",
+    "위치": "서문",
+    "분야": "카페"
+  },
+  {
+    "name": "꿈의대화",
+    "phone": "053-939-2716",
+    "url": "http://place.map.kakao.com/1113796909",
+    "위치": "서문",
+    "분야": "카페"
+  },
+  {
+    "name": "아필립라이브바",
+    "phone": "053-954-3983",
+    "url": "http://place.map.kakao.com/8431240",
+    "위치": "서문",
+    "분야": "카페"
+  },
+  {
+    "name": "어펙션",
+    "phone": "0507-1347-5596",
+    "url": "http://place.map.kakao.com/540590303",
+    "위치": "서문",
+    "분야": "카페"
+  },
+  {
+    "name": "김춘봉돼지찌개",
+    "phone": "053-566-0753",
+    "url": "http://place.map.kakao.com/1757087758",
+    "위치": "서문",
+    "분야": "음식점"
+  },
+  {
+    "name": "김밥마을",
+    "phone": "053-959-0717",
+    "url": "http://place.map.kakao.com/523161098",
+    "위치": "서문",
+    "분야": "음식점"
+  },
+  {
+    "name": "우된장 경북대점",
+    "phone": "053-955-1717",
+    "url": "http://place.map.kakao.com/1924058939",
+    "위치": "서문",
+    "분야": "음식점"
+  },
+  {
+    "name": "공간식당",
+    "phone": "053-956-5612",
+    "url": "http://place.map.kakao.com/16924563",
+    "위치": "서문",
+    "분야": "음식점"
+  },
+  {
+    "name": "자매분식",
     "phone": "전화번호 없음",
-    "url": "http://place.map.kakao.com/1861654658",
-    "openingHours": "정보 없음",
-    "reviewCount": "0"
+    "url": "http://place.map.kakao.com/21367622",
+    "위치": "서문",
+    "분야": "음식점"
   },
   {
-    "name": "매스커피 경북대점",
-    "phone": "053-955-8994",
-    "url": "http://place.map.kakao.com/26929458",
-    "openingHours": "정보 없음",
-    "reviewCount": "0"
+    "name": "GS25 경북대서문점",
+    "phone": "080-999-5425",
+    "url": "http://place.map.kakao.com/396753303",
+    "위치": "서문",
+    "분야": "편의점"
   },
   {
-    "name": "프롬프트 일청담점",
-    "phone": "070-4015-3476",
-    "url": "http://place.map.kakao.com/1006797863",
-    "openingHours": "정보 없음",
-    "reviewCount": "0"
-  },
-  {
-    "name": "과일싸롱 경북대점",
-    "phone": "전화번호 없음",
-    "url": "http://place.map.kakao.com/1955268793",
-    "openingHours": "정보 없음",
-    "reviewCount": "0"
-  },
-  {
-    "name": "마실커피 경북대점",
-    "phone": "053-945-0055",
-    "url": "http://place.map.kakao.com/951400970",
-    "openingHours": "정보 없음",
-    "reviewCount": "0"
+    "name": "세븐일레븐 대구경대교점",
+    "phone": "053-939-2198",
+    "url": "http://place.map.kakao.com/27497882",
+    "위치": "서문",
+    "분야": "편의점"
   },
   {
     "name": "해쉬커피 경북대북문점",
-    "phone": "전화번호 없음",
+    "phone": "0507-2087-1815",
     "url": "http://place.map.kakao.com/85982486",
-    "openingHours": "정보 없음",
-    "reviewCount": "0"
-  },
-  {
-    "name": "만화카페쉼표",
-    "phone": "053-952-3830",
-    "url": "http://place.map.kakao.com/688422543",
-    "openingHours": "정보 없음",
-    "reviewCount": "0"
+    "위치": "북문",
+    "분야": "카페"
   },
   {
     "name": "아지트 경북대점",
     "phone": "070-8285-6811",
     "url": "http://place.map.kakao.com/586783489",
-    "openingHours": "정보 없음",
-    "reviewCount": "0"
+    "위치": "북문",
+    "분야": "카페"
   },
   {
-    "name": "카페플랜 경북대점",
-    "phone": "053-710-3017",
-    "url": "http://place.map.kakao.com/388911316",
-    "openingHours": "정보 없음",
-    "reviewCount": "0"
+    "name": "스타벅스 경북대점",
+    "phone": "1522-3232",
+    "url": "http://place.map.kakao.com/17884722",
+    "위치": "북문",
+    "분야": "카페"
+  },
+  {
+    "name": "커피명가 경대북문점",
+    "phone": "053-951-0892",
+    "url": "http://place.map.kakao.com/14522687",
+    "위치": "북문",
+    "분야": "카페"
+  },
+  {
+    "name": "공차 경북대점",
+    "phone": "053-959-0303",
+    "url": "http://place.map.kakao.com/26620945",
+    "위치": "북문",
+    "분야": "카페"
+  },
+  {
+    "name": "폴인포케 경대점",
+    "phone": "053-944-4885",
+    "url": "http://place.map.kakao.com/1227274285",
+    "위치": "북문",
+    "분야": "음식점"
+  },
+  {
+    "name": "감성낙곱새 동구지점",
+    "phone": "053-742-7887",
+    "url": "http://place.map.kakao.com/1218713857",
+    "위치": "북문",
+    "분야": "음식점"
+  },
+  {
+    "name": "한솥도시락 경북대북문점",
+    "phone": "053-954-3944",
+    "url": "http://place.map.kakao.com/11635216",
+    "위치": "북문",
+    "분야": "음식점"
+  },
+  {
+    "name": "맘스터치 신경북대점",
+    "phone": "053-944-5582",
+    "url": "http://place.map.kakao.com/24975336",
+    "위치": "북문",
+    "분야": "음식점"
+  },
+  {
+    "name": "노브랜드버거 대구경대북문점",
+    "phone": "053-941-4456",
+    "url": "http://place.map.kakao.com/330153362",
+    "위치": "북문",
+    "분야": "음식점"
+  },
+  {
+    "name": "이마트24 경북대점",
+    "phone": "053-958-8265",
+    "url": "http://place.map.kakao.com/339659320",
+    "위치": "북문",
+    "분야": "편의점"
+  },
+  {
+    "name": "GS25 경북대북문점",
+    "phone": "1644-5425",
+    "url": "http://place.map.kakao.com/785114349",
+    "위치": "북문",
+    "분야": "편의점"
+  },
+  {
+    "name": "세븐일레븐 경북대점",
+    "phone": "1577-0711",
+    "url": "http://place.map.kakao.com/2002698",
+    "위치": "북문",
+    "분야": "편의점"
+  },
+  {
+    "name": "CU 경북대북문점",
+    "phone": "053-939-1134",
+    "url": "http://place.map.kakao.com/17041755",
+    "위치": "북문",
+    "분야": "편의점"
+  },
+  {
+    "name": "세븐일레븐 경북대북문점",
+    "phone": "전화번호 없음",
+    "url": "http://place.map.kakao.com/18112749",
+    "위치": "북문",
+    "분야": "편의점"
+  },
+  {
+    "name": "블라인드멜론 북문점",
+    "phone": "010-2486-6468",
+    "url": "http://place.map.kakao.com/689287830",
+    "위치": "농장문",
+    "분야": "카페"
+  },
+  {
+    "name": "카페인중독 대구경북대점",
+    "phone": "053-939-1112",
+    "url": "http://place.map.kakao.com/1955475331",
+    "위치": "농장문",
+    "분야": "카페"
+  },
+  {
+    "name": "커피장인 경대북문점",
+    "phone": "053-218-2100",
+    "url": "http://place.map.kakao.com/1203011312",
+    "위치": "농장문",
+    "분야": "카페"
+  },
+  {
+    "name": "루트커피",
+    "phone": "053-955-5999",
+    "url": "http://place.map.kakao.com/757153933",
+    "위치": "농장문",
+    "분야": "카페"
+  },
+  {
+    "name": "커피베이 경북대북문점",
+    "phone": "053-956-5116",
+    "url": "http://place.map.kakao.com/777434501",
+    "위치": "농장문",
+    "분야": "카페"
+  },
+  {
+    "name": "명가우육면 경대점",
+    "phone": "070-4007-1020",
+    "url": "http://place.map.kakao.com/77740230",
+    "위치": "농장문",
+    "분야": "음식점"
+  },
+  {
+    "name": "끝돈 본점",
+    "phone": "053-954-9292",
+    "url": "http://place.map.kakao.com/268788415",
+    "위치": "농장문",
+    "분야": "음식점"
+  },
+  {
+    "name": "반미리코",
+    "phone": "070-8278-1607",
+    "url": "http://place.map.kakao.com/26224440",
+    "위치": "농장문",
+    "분야": "음식점"
+  },
+  {
+    "name": "끝소 본점",
+    "phone": "053-587-9292",
+    "url": "http://place.map.kakao.com/1339351759",
+    "위치": "농장문",
+    "분야": "음식점"
+  },
+  {
+    "name": "큰바우국밥 경북대 북문점",
+    "phone": "053-953-4743",
+    "url": "http://place.map.kakao.com/235967187",
+    "위치": "농장문",
+    "분야": "음식점"
+  },
+  {
+    "name": "이마트24 뉴경북대북문점",
+    "phone": "02-6916-1500",
+    "url": "http://place.map.kakao.com/2025908847",
+    "위치": "농장문",
+    "분야": "편의점"
+  },
+  {
+    "name": "세븐일레븐 경북대제일점",
+    "phone": "전화번호 없음",
+    "url": "http://place.map.kakao.com/1314464058",
+    "위치": "농장문",
+    "분야": "편의점"
+  },
+  {
+    "name": "GS25 산격점",
+    "phone": "전화번호 없음",
+    "url": "http://place.map.kakao.com/12295186",
+    "위치": "농장문",
+    "분야": "편의점"
+  },
+  {
+    "name": "CU 경북대북문점",
+    "phone": "053-939-1134",
+    "url": "http://place.map.kakao.com/17041755",
+    "위치": "농장문",
+    "분야": "편의점"
+  },
+  {
+    "name": "피크닉스테이션",
+    "phone": "0507-1326-7165",
+    "url": "http://place.map.kakao.com/683175861",
+    "위치": "텍문",
+    "분야": "카페"
+  },
+  {
+    "name": "플레이스23",
+    "phone": "0507-2085-2483",
+    "url": "http://place.map.kakao.com/25491062",
+    "위치": "텍문",
+    "분야": "카페"
+  },
+  {
+    "name": "라임커피",
+    "phone": "0503-5260-7616",
+    "url": "http://place.map.kakao.com/740385620",
+    "위치": "텍문",
+    "분야": "카페"
+  },
+  {
+    "name": "디에이",
+    "phone": "010-8698-8519",
+    "url": "http://place.map.kakao.com/266250601",
+    "위치": "텍문",
+    "분야": "카페"
+  },
+  {
+    "name": "블렌즈",
+    "phone": "070-4110-4888",
+    "url": "http://place.map.kakao.com/21364695",
+    "위치": "텍문",
+    "분야": "카페"
+  },
+  {
+    "name": "우즈카츠",
+    "phone": "053-941-7887",
+    "url": "http://place.map.kakao.com/528899379",
+    "위치": "텍문",
+    "분야": "음식점"
+  },
+  {
+    "name": "찬누리식당",
+    "phone": "053-939-2377",
+    "url": "http://place.map.kakao.com/16261942",
+    "위치": "텍문",
+    "분야": "음식점"
+  },
+  {
+    "name": "황금성",
+    "phone": "053-942-0889",
+    "url": "http://place.map.kakao.com/15656661",
+    "위치": "텍문",
+    "분야": "음식점"
+  },
+  {
+    "name": "나나찜닭",
+    "phone": "053-943-1820",
+    "url": "http://place.map.kakao.com/451950830",
+    "위치": "텍문",
+    "분야": "음식점"
+  },
+  {
+    "name": "이지치지 복현동본점",
+    "phone": "053-952-8253",
+    "url": "http://place.map.kakao.com/651333087",
+    "위치": "텍문",
+    "분야": "음식점"
+  },
+  {
+    "name": "세븐일레븐 경대테크노파크점",
+    "phone": "1577-0711",
+    "url": "http://place.map.kakao.com/18117929",
+    "위치": "텍문",
+    "분야": "편의점"
+  },
+  {
+    "name": "세븐일레븐 대구경대원룸점",
+    "phone": "1577-0711",
+    "url": "http://place.map.kakao.com/12149237",
+    "위치": "텍문",
+    "분야": "편의점"
+  },
+  {
+    "name": "이마트24 경북대누리관점",
+    "phone": "02-6916-1500",
+    "url": "http://place.map.kakao.com/881245532",
+    "위치": "텍문",
+    "분야": "편의점"
+  },
+  {
+    "name": "GS25 경북대첨성관점",
+    "phone": "053-955-2425",
+    "url": "http://place.map.kakao.com/128045548",
+    "위치": "텍문",
+    "분야": "편의점"
+  },
+  {
+    "name": "H커피",
+    "phone": "053-246-7658",
+    "url": "http://place.map.kakao.com/1219338902",
+    "위치": "동문",
+    "분야": "카페"
+  },
+  {
+    "name": "몬스터커피 대구해링턴경대점",
+    "phone": "053-939-1209",
+    "url": "http://place.map.kakao.com/1527952742",
+    "위치": "동문",
+    "분야": "카페"
+  },
+  {
+    "name": "더벤티 대구경대해링턴점",
+    "phone": "070-4647-0220",
+    "url": "http://place.map.kakao.com/1942738612",
+    "위치": "동문",
+    "분야": "카페"
+  },
+  {
+    "name": "포레스트",
+    "phone": "0507-1389-1674",
+    "url": "http://place.map.kakao.com/111253905",
+    "위치": "동문",
+    "분야": "카페"
+  },
+  {
+    "name": "헬로우어게인 복현점",
+    "phone": "010-2212-9797",
+    "url": "http://place.map.kakao.com/188225985",
+    "위치": "동문",
+    "분야": "카페"
+  },
+  {
+    "name": "경주식당",
+    "phone": "전화번호 없음",
+    "url": "http://place.map.kakao.com/21367421",
+    "위치": "동문",
+    "분야": "음식점"
+  },
+  {
+    "name": "통큰분식",
+    "phone": "전화번호 없음",
+    "url": "http://place.map.kakao.com/21435485",
+    "위치": "동문",
+    "분야": "음식점"
+  },
+  {
+    "name": "삼용식당 분식",
+    "phone": "053-954-0240",
+    "url": "http://place.map.kakao.com/21368196",
+    "위치": "동문",
+    "분야": "음식점"
+  },
+  {
+    "name": "다래분식",
+    "phone": "053-959-1526",
+    "url": "http://place.map.kakao.com/8852144",
+    "위치": "동문",
+    "분야": "음식점"
+  },
+  {
+    "name": "카츠대학",
+    "phone": "0507-1356-7894",
+    "url": "http://place.map.kakao.com/63491209",
+    "위치": "동문",
+    "분야": "음식점"
+  },
+  {
+    "name": "세븐일레븐 경대행복점",
+    "phone": "1577-0711",
+    "url": "http://place.map.kakao.com/18116621",
+    "위치": "동문",
+    "분야": "편의점"
+  },
+  {
+    "name": "CU 대구경대로점",
+    "phone": "053-939-3088",
+    "url": "http://place.map.kakao.com/2112669709",
+    "위치": "동문",
+    "분야": "편의점"
+  },
+  {
+    "name": "프롬프트 일청담점",
+    "phone": "070-4015-3476",
+    "url": "http://place.map.kakao.com/1006797863",
+    "위치": "교내",
+    "분야": "카페"
+  },
+  {
+    "name": "GS25 경북대복현회관점",
+    "phone": "080-999-5425",
+    "url": "http://place.map.kakao.com/667464455",
+    "위치": "교내",
+    "분야": "편의점"
+  },
+  {
+    "name": "GS25 경북대도서관점",
+    "phone": "전화번호 없음",
+    "url": "http://place.map.kakao.com/279468114",
+    "위치": "교내",
+    "분야": "편의점"
+  },
+  {
+    "name": "GS25 경북대생활관점",
+    "phone": "전화번호 없음",
+    "url": "http://place.map.kakao.com/1057291065",
+    "위치": "교내",
+    "분야": "편의점"
+  },
+  {
+    "name": "GS25 경대기숙사점",
+    "phone": "053-955-3852",
+    "url": "http://place.map.kakao.com/20151780",
+    "위치": "교내",
+    "분야": "편의점"
+  },
+  {
+    "name": "GS25 경북대복지관점",
+    "phone": "080-999-5425",
+    "url": "http://place.map.kakao.com/666991880",
+    "위치": "교내",
+    "분야": "편의점"
   }
 ]

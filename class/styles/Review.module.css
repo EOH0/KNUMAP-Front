@@ -1,0 +1,45 @@
+/* styles/Review.module.css */
+
+.container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.stars {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.star {
+  font-size: 36px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.star.active {
+  color: #FFD700;
+}
+
+.submitButton {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #d90e15;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
