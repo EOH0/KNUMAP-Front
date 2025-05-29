@@ -1,14 +1,7 @@
 import Head from "next/head";
-import { useState, useEffect, useContext } from "react"; // useContext 추가!
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { UserContext } from "../lib/UserContext";
-import { auth } from "../lib/firebase";
-import { onAuthStateChanged, signOut } from "firebase/auth";
 import styles from "../styles/Main.module.css";
-import { useContext } from "react";
-import { UserContext } from "./_app";
-import { signOut } from "firebase/auth";
-import { auth } from "../lib/firebase";
 
 // export default function Home() {
 //   // 장소 리스트 상태
@@ -28,35 +21,41 @@ import { auth } from "../lib/firebase";
 
 export default function Home() {
   const router = useRouter();
-
-  // 로그인 성공시 로그아웃 기능
-  const user = useContext(UserContext);
-
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      alert("로그아웃 되었습니다.");
-      router.push("/");
-    } catch (err) {
-      alert("로그아웃 실패: " + err.message);
+  
+  const [places, setPlaces] = useState([
+    {
+      id: 1,
+      name: "경북대학교",
+      type: "대학교",
+      openingHours: "09:00~18:00",
+      reviewCount: 10,
+      logoUrl: "/school.png"
+    },
+    {
+      id: 2,
+      name: "맛집카페",
+      type: "카페",
+      openingHours: "10:00~22:00",
+      reviewCount: 5,
+      logoUrl: ""
     }
-  };
+  ]);
 
   // 1. localStorage에서 즐겨찾기 불러오기
   const [favorites, setFavorites] = useState(() => {
     if (typeof window !== "undefined") {
-      const saved = localStorage.getItem(favoritesKey);
+      const saved = localStorage.getItem("favorites");
       return saved ? JSON.parse(saved) : [];
     }
     return [];
   });
 
-  // 2. 즐겨찾기 변경 시 localStorage에 저장 (유저별)
+  // 2. 즐겨찾기 변경 시 localStorage에 저장
   useEffect(() => {
-    localStorage.setItem(favoritesKey, JSON.stringify(favorites));
-  }, [favorites, favoritesKey]);
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  }, [favorites]);
 
-  // 즐겨찾기 토글 함수
+   // 즐겨찾기 토글 함수
   const toggleFavorite = (place) => {
     if (favorites.find(f => f.id === place.id)) {
       setFavorites(favorites.filter(f => f.id !== place.id));
@@ -98,42 +97,9 @@ export default function Home() {
           <button onClick={() => router.push("/social")}>소셜</button>
           <button onClick={goToFavorite}>즐겨찾기</button>
         </nav>
-                <div className={styles.userMenu}>
-          {user ? (
-            <>
-              <button
-                style={{
-                  background: "none",
-                  border: "none",
-                  color: "#333",
-                  fontWeight: "bold",
-                  cursor: "pointer",
-                  marginRight: 10
-                }}
-                onClick={() => router.push("/profile")}
-              >
-                내 정보
-              </button>
-              <span style={{ marginRight: 10 }}>{user.email}</span>
-              <button
-                style={{
-                  background: "none",
-                  border: "none",
-                  color: "#D90E15",
-                  fontWeight: "bold",
-                  cursor: "pointer"
-                }}
-                onClick={handleLogout}
-              >
-                로그아웃
-              </button>
-            </>
-          ) : (
-            <>
-              <a href="#" onClick={e => { e.preventDefault(); router.push("/login"); }}>로그인</a> |{" "}
-              <a href="#" onClick={e => { e.preventDefault(); router.push("/signup"); }}>회원가입</a>
-            </>
-          )}
+        <div className={styles.userMenu}>
+          <a href="#" onClick={e => {e.preventDefault(); router.push("/login");}}>로그인</a> |{" "}
+          <a href="#" onClick={e => {e.preventDefault(); router.push("/signup");}}>회원가입</a>
         </div>
       </header>
 
@@ -164,7 +130,7 @@ export default function Home() {
             }}
           >
             <div className={styles.tabRow}>
-              <button className={styles.tabActive}>인기</button>
+              <button>인기</button>
               <button>관심</button>
               <span className={styles.yearInfo} style={{ marginLeft: "auto" }}>기준 년도 : 2025</span>
             </div>
