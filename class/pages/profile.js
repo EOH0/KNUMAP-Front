@@ -1,6 +1,6 @@
 // pages/profile.js
 import { useContext } from "react";
-import { UserContext } from "./_app";
+import { UserContext } from "../lib/UserContext";
 import { useRouter } from "next/router";
 
 export default function Profile() {
