@@ -19,11 +19,9 @@ export default function Favorite() {
       } catch {
         setFavorites([]);
       }
-    } else {
-      if (typeof window !== "undefined") {
-        const saved = localStorage.getItem(favoritesKey);
-        setFavorites(saved ? JSON.parse(saved) : []);
-      }
+    } else if (typeof window !== "undefined") {
+      const saved = localStorage.getItem(favoritesKey);
+      setFavorites(saved ? JSON.parse(saved) : []);
     }
   }, [router.query.data, favoritesKey]);
 
@@ -41,8 +39,6 @@ export default function Favorite() {
   };
 
   return (
-<<<<<<< HEAD
-<<<<<<< HEAD
     <>
       {/* 상단 네비게이션 */}
       <header className={mainStyles.header}>
@@ -90,51 +86,20 @@ export default function Favorite() {
             </>
           ) : (
             <>
-              <a href="#" onClick={e => {e.preventDefault(); router.push("/login");}}>로그인</a> |{" "}
-              <a href="#" onClick={e => {e.preventDefault(); router.push("/signup");}}>회원가입</a>
+              <a href="#" onClick={e => { e.preventDefault(); router.push("/login"); }}>로그인</a> |{" "}
+              <a href="#" onClick={e => { e.preventDefault(); router.push("/signup"); }}>회원가입</a>
             </>
           )}
         </div>
       </header>
 
+      {/* 즐겨찾기 메인 콘텐츠 */}
       <main className={mainStyles.main}>
         <div className={mainStyles.pageTitle}>⭐ 즐겨찾기</div>
         <div className={styles.favoriteGrid}>
           {favorites.length === 0 ? (
             <div style={{ color: "#bbb", marginTop: 20, textAlign: "center", gridColumn: "1/-1" }}>
               즐겨찾기한 장소가 없습니다.
-=======
-    <main className={styles.main}>s
-=======
-    <main className={styles.main}>
->>>>>>> 8e31c777f8ce37b38637415668660c3112e67972
-      <div className={styles.pageTitle}>⭐ 즐겨찾기</div>
-      <section className={styles.leftPanel}>
-        {favorites.length === 0 ? (
-          <div style={{ color: "#bbb", marginTop: 20, textAlign: "center" }}>
-            즐겨찾기한 장소가 없습니다.
-          </div>
-        ) : (
-          favorites.map((place) => (
-            <div className={styles.placeCard} key={place.id}>
-              <div className={styles.placeHeader}>
-<<<<<<< HEAD
-                <img src={place.logoUrl || "/school.png"} alt="장소 로고" className={styles.placeLogo} />
-                <div>
-                  <div className={styles.placeName}>{place.name}</div>
-                  <div className={styles.placeType}>{place.type}</div>
-                </div>
-                <span className={styles.starBtn} style={{ color: "#D90E15" }}>★</span>
-              </div>
-              <div className={styles.placeInfo}>
-                <div>영업시간 <span className={styles.infoNum}>{place.openingHours}</span></div>
-                <div>리뷰 <span className={styles.infoNum}>{place.reviewCount}명</span></div>
-              </div>
-              <div className={styles.placeFooter}>
-                <button className={styles.linkBtn}>홈페이지</button>
-                <button className={styles.linkBtn}>지도 리뷰</button>
-              </div>
->>>>>>> 8e574a7c (fix)
             </div>
           ) : (
             favorites.map((place) => (
@@ -153,44 +118,20 @@ export default function Favorite() {
                   >
                     ★
                   </button>
-=======
-                <img
-                  src={place.logoUrl || "/school.png"}
-                  alt="장소 로고"
-                  className={styles.placeLogo}
-                />
-                <div>
-                  <div className={styles.placeName}>{place.name}</div>
-                  <div className={styles.placeType}>{place.type}</div>
->>>>>>> 8e31c777f8ce37b38637415668660c3112e67972
                 </div>
-                <button
-                  className={styles.starBtn}
-                  style={{ color: "#D90E15", transition: "color 0.2s" }}
-                  onClick={() => removeFavorite(place.id)}
-                  aria-label="즐겨찾기 해제"
-                >
-                  ★
-                </button>
-              </div>
-              <div className={styles.placeInfo}>
-                <div>
-                  영업시간{" "}
-                  <span className={styles.infoNum}>{place.openingHours}</span>
+                <div className={styles.placeInfo}>
+                  <div>영업시간 <span className={styles.infoNum}>{place.openingHours}</span></div>
+                  <div>리뷰 <span className={styles.infoNum}>{place.reviewCount}명</span></div>
                 </div>
-                <div>
-                  리뷰{" "}
-                  <span className={styles.infoNum}>{place.reviewCount}명</span>
+                <div className={styles.placeFooter}>
+                  <button className={styles.linkBtn}>홈페이지</button>
+                  <button className={styles.linkBtn}>지도 리뷰</button>
                 </div>
               </div>
-              <div className={styles.placeFooter}>
-                <button className={styles.linkBtn}>홈페이지</button>
-                <button className={styles.linkBtn}>지도 리뷰</button>
-              </div>
-            </div>
-          ))
-        )}
-      </section>
-    </main>
+            ))
+          )}
+        </div>
+      </main>
+    </>
   );
 }
