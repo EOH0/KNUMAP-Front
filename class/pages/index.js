@@ -176,6 +176,19 @@ export default function Home() {
                       />
                       <div>
                         <div className={styles.placeName}>{place.name}</div>
+                        {/* ✅ 여기: 전화번호 추가 */}
+                        <div style={{ marginTop: 4 }}>
+                          {place.phone ? (
+                            <a
+                              href={`tel:${place.phone}`}
+                              style={{ color: "#555", fontSize: "14px", textDecoration: "none" }}
+                            >
+                              📞 {place.phone}
+                            </a>
+                          ) : (
+                            <span style={{ color: "#999", fontSize: "14px" }}>전화번호 없음</span>
+                          )}
+                        </div>
                         <div className={styles.placeType}>{place.type}</div>
                       </div>
                       <button
@@ -188,11 +201,18 @@ export default function Home() {
                       <div>리뷰 수 <span className={styles.infoNum}>{reviews.filter(r => r.placeId === place.url).length}명</span></div>
                       <div>
                         평균 평점 <span className={styles.infoNum}>
-                          {[1, 2, 3, 4, 5].map(num => (
-                            <span key={num} style={{ color: avgRating >= num ? "#D90E15" : "#ccc", fontSize: 18 }}>★</span>
-                          ))}
-                        </span>
-                      </div>
+                        {avgRating.toFixed(1)} / 5{" "}
+                        {[1, 2, 3, 4, 5].map(num => (
+                          <span
+                            key={num}
+                            style={{
+                              color: avgRating >= num ? "#D90E15" : "#ccc",
+                              fontSize: 18
+                            }}
+                          >★</span>
+                        ))}
+                      </span>
+                    </div>
                     </div>
                     <div className={styles.placeFooter}>
                       <button className={styles.linkBtn} onClick={() => window.open(place.url, "_blank")}>홈페이지</button>

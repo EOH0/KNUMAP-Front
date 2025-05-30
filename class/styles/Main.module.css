@@ -357,3 +357,9 @@
 .authButton:hover {
   background-color: #D90E15;
 }
+
+.placeCard:hover {
+  transform: scale(1.01);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease-in-out;
+}
