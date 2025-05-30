@@ -1,0 +1,75 @@
+{
+  "정문": {
+    "카페": [
+      {
+        "name": "모래케이크",
+        "phone": "010-8365-3686",
+        "url": "http://place.map.kakao.com/1301588655"
+      },
+      {
+        "name": "우드맥",
+        "phone": "053-958-5290",
+        "url": "http://place.map.kakao.com/883859914"
+      },
+      {
+        "name": "해쉬커피 경북대정문점",
+        "phone": "050720871815",
+        "url": "http://place.map.kakao.com/279956399"
+      },
+      {
+        "name": "빽다방 경북대정문점",
+        "phone": "053-959-6151",
+        "url": "http://place.map.kakao.com/27392978"
+      },
+      {
+        "name": "레코디안",
+        "phone": "053-939-9396",
+        "url": "http://place.map.kakao.com/20174238"
+      }
+    ],
+    "음식점": [
+      {
+        "name": "백주부김밥떡볶이",
+        "phone": "010-3348-5420",
+        "url": "http://place.map.kakao.com/467490523"
+      },
+      {
+        "name": "원할머니보쌈족발 대구경대배달점",
+        "phone": "053-957-5779",
+        "url": "http://place.map.kakao.com/1701565597"
+      },
+      {
+        "name": "땅땅치킨 신암점",
+        "phone": "053-958-6464",
+        "url": "http://place.map.kakao.com/13269743"
+      },
+      {
+        "name": "한솥도시락 경북대정문점",
+        "phone": "053-358-1446",
+        "url": "http://place.map.kakao.com/16929212"
+      },
+      {
+        "name": "샐러디아 경북대점",
+        "phone": "053-955-9777",
+        "url": "http://place.map.kakao.com/164846126"
+      },
+      {
+        "name": "스톡홀름 샐러드 경대 정문점",
+        "phone": "010-7659-3138",
+        "url": "https://place.map.kakao.com/1692693630"
+      }
+    ],
+    "편의점": [
+      {
+        "name": "GS25 경북대정문점",
+        "phone": "053-954-0982",
+        "url": "http://place.map.kakao.com/20037800"
+      },
+      {
+        "name": "CU 경대정문점",
+        "phone": "053-958-0385",
+        "url": "http://place.map.kakao.com/19198515"
+      }
+    ]
+  }
+}

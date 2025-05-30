@@ -125,8 +125,8 @@ export default function Review() {
         </nav>
         <div className={styles.userMenu}>
           <a href="#" onClick={(e) => { e.preventDefault(); router.push("/profile"); }}>내 정보</a>
-          <span>|</span>
-          <a href="#" onClick={(e) => { e.preventDefault(); signOut(auth); alert("로그아웃 되었습니다."); router.push("/"); }}>로그아웃</a>
+          <span style={{ margin: "0 6px" }}>|</span>
+          <a href="#" onClick={(e) => { e.preventDefault(); handleLogout(); }}>로그아웃</a>
         </div>
       </header>
 
