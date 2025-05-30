@@ -429,7 +429,7 @@ useEffect(() => {
                   <div className={`${styles.placeCard} ${ratingClass}`} key={`${place.name}_${place.위치}`}>
                     <div className={styles.placeHeader}>
                       <img
-                        src={`/data/image/${encodeURIComponent(place.name)}.jpg`}
+                        src={`/data/image/${place.name.replace(/\s/g, "_")}.jpg`}
                         alt="장소 이미지"
                         className={styles.placeLogo}
                         onError={(e) => { e.target.onerror = null; e.target.src = "/data/image.jpg"; }}
