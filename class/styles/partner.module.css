@@ -1,0 +1,71 @@
+.partnerList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.partnerCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
+}
+
+.partnerCard:hover {
+  transform: translateY(-3px);
+}
+
+.cardLeft {
+  flex: 1;
+}
+
+.cardRight {
+  width: 100px;
+  margin-left: 16px;
+}
+
+.cardRight img {
+  width: 100%;
+  height: 80px;
+  border-radius: 10px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.partnerName {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.partnerDetail {
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+.partnerLinks {
+  display: flex;
+  gap: 12px;
+}
+
+.partnerLinks img {
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.partnerLinks img:hover {
+  transform: scale(1.2);
+}
