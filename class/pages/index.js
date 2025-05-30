@@ -6,6 +6,7 @@ import { UserContext } from "../lib/UserContext";
 import { signOut } from "firebase/auth";
 import { auth } from "../lib/firebase";
 import Hero from "../components/Hero";
+import Fuse from "fuse.js";
 
 export default function Home() {
   const router = useRouter();
@@ -21,6 +22,11 @@ export default function Home() {
   const [showFilters, setShowFilters] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+
+  const fuse = new Fuse(places, {
+    keys: ["name", "위치", "분야"], // 검색 대상 필드 지정
+    threshold: 0.3, // 정확도 (낮을수록 엄격)
+  });
 
   useEffect(() => {
     fetch("/data/places.json")
@@ -125,13 +131,18 @@ export default function Home() {
 
   const handleSearch = () => {
     if (!searchQuery.trim()) {
-      // 검색어 없으면 필터만 적용
       const filtered = places.filter((p) =>
         (!selectedLocation || p.위치 === selectedLocation) &&
         (!selectedCategory || p.분야 === selectedCategory)
       );
-      return setFilteredPlaces(filtered);
+      setFilteredPlaces(filtered);
+      return;
     }
+
+    const fuse = new Fuse(places, {
+      keys: ["name", "위치", "분야"],
+      threshold: 0.3,
+    });
 
     const results = fuse.search(searchQuery).map(r => r.item);
     const filtered = results.filter((p) =>
@@ -140,6 +151,7 @@ export default function Home() {
     );
     setFilteredPlaces(filtered);
   };
+
 
 
   const handleKeyDown = (e) => {
@@ -404,10 +416,16 @@ export default function Home() {
                             alert("로그인이 필요합니다.");
                             return;
                           }
-                          if (hasUserReviewed(place.url)) {
-                            alert("이미 이 장소에 리뷰를 남기셨습니다.");
+                          if (!user) {
+                            alert("로그인이 필요합니다.");
                             return;
                           }
+
+                          if (hasUserReviewed(place.url)) {
+                            const proceed = confirm("이미 리뷰를 작성하셨습니다. 수정하시겠습니까?");
+                            if (!proceed) return;
+                          }
+
                           router.push({ pathname: "/review", query: { placeId: place.url } });
                         }}
                       >지도 리뷰</button>

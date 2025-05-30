@@ -1,12 +1,23 @@
 [
   {
     "placeId": "http://place.map.kakao.com/1301588655",
-    "user": "zmfnwj@gmail.com",
-    "rating": 3
+    "user": "gustn0715@gmail.com",
+    "rating": 4,
+    "text": "sadasdsadasd",
+    "date": "2025-05-30T13:19:50.024Z"
   },
   {
     "placeId": "http://place.map.kakao.com/1301588655",
-    "user": "gustn0715@gmail.com",
-    "rating": 5
+    "user": "zmfnwj@gmail.com",
+    "rating": 2,
+    "text": "ㅁㄴㅇㅁㄴㅇㅁㄴㅇㄴㅁㅇㅁㄴㅇㅈ",
+    "date": "2025-05-30T14:03:51.706Z"
+  },
+  {
+    "placeId": "http://place.map.kakao.com/883859914",
+    "user": "zmfnwj@gmail.com",
+    "rating": 1,
+    "text": "ㅈㅈㅈㅈㅂㅇㅂㅇㅂㅈㅇㅂ",
+    "date": "2025-05-30T14:04:06.307Z"
   }
 ]

@@ -1,6 +1,10 @@
 {
   "http://place.map.kakao.com/1301588655": {
-    "totalRating": 8,
-    "reviewCount": 2
+    "totalRating": 11,
+    "reviewCount": 3
+  },
+  "http://place.map.kakao.com/883859914": {
+    "totalRating": 1,
+    "reviewCount": 1
   }
 }
