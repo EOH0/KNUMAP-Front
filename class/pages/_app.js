@@ -3,6 +3,7 @@ import { createContext } from "react";
 import { UserContext } from "../lib/UserContext";
 import { auth } from "../lib/firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import '../styles/globals.css';
 
 export default function App({ Component, pageProps }) {
   const [user, setUser] = useState(null);

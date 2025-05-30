@@ -5,6 +5,7 @@ import styles from "../styles/Main.module.css";
 import { UserContext } from "../lib/UserContext";
 import { signOut } from "firebase/auth";
 import { auth } from "../lib/firebase";
+import Hero from "../components/Hero";
 
 export default function Home() {
   const router = useRouter();
@@ -13,6 +14,13 @@ export default function Home() {
   const [places, setPlaces] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [userReviews, setUserReviews] = useState([]);
+  const [showNavbar, setShowNavbar] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredPlaces, setFilteredPlaces] = useState([]);
+
+  const [showFilters, setShowFilters] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
     fetch("/data/places.json")
@@ -56,6 +64,25 @@ export default function Home() {
     }
   }, [favorites, user]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 300) {
+        setShowNavbar(true);
+      } else {
+        setShowNavbar(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    // 처음엔 전체 표시
+    setFilteredPlaces(places);
+  }, [places]);
+  
+  const normalize = (str) =>
+  str.toLowerCase().replace(/\s+/g, "").replace(/[^a-z0-9가-힣]/gi, "");
 
   const toggleFavorite = (place) => {
   if (!user) {
@@ -96,6 +123,29 @@ export default function Home() {
     return userReviews.some(r => r.placeId === placeId);
   };
 
+  const handleSearch = () => {
+    if (!searchQuery.trim()) {
+      // 검색어 없으면 필터만 적용
+      const filtered = places.filter((p) =>
+        (!selectedLocation || p.위치 === selectedLocation) &&
+        (!selectedCategory || p.분야 === selectedCategory)
+      );
+      return setFilteredPlaces(filtered);
+    }
+
+    const results = fuse.search(searchQuery).map(r => r.item);
+    const filtered = results.filter((p) =>
+      (!selectedLocation || p.위치 === selectedLocation) &&
+      (!selectedCategory || p.분야 === selectedCategory)
+    );
+    setFilteredPlaces(filtered);
+  };
+
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") handleSearch();
+  };
+
   return (
     <>
       <Head>
@@ -105,7 +155,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <header className={styles.header}>
+      {/* 🧷 고정 상단 */}
+      <header className={`${styles.header} ${showNavbar ? styles.headerVisible : styles.headerHidden}`}>
         <div className={styles.logo} onClick={() => router.push("/")}>KNUMAP</div>
         <nav className={styles.menu}>
           <button onClick={() => router.push("/partner")}>제휴</button>
@@ -144,26 +195,156 @@ export default function Home() {
         </div>
       </header>
 
+      {/* Hero Section */}
+      <Hero />
+      
+      {/* 나머지 장소 리스트 메인 콘텐츠 */}
       <main className={styles.main}>
-        <div className={styles.pageTitle}>경북대학교 장소검색</div>
-        <div className={styles.filterRow}>
-          <input className={styles.searchInput} placeholder="찾으실려는 장소를 입력해주세요." />
-          <button className={styles.searchBtn}>🔍</button>
-          <button className={styles.searchBtn}>🔦</button>
+        <div style={{ textAlign: "center", marginTop: "40px" }}>
+          <input
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={handleKeyDown}
+            className={styles.searchInput}
+            placeholder="찾으실려는 장소를 입력해주세요."
+            style={{
+              padding: "10px 16px",
+              borderRadius: "24px",
+              border: "1px solid #ccc",
+              width: "280px",
+              fontSize: "16px",
+              outline: "none",
+              transition: "border-color 0.2s, box-shadow 0.2s",
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.borderColor = "#D90E15";
+              e.target.style.boxShadow = "0 0 5px rgba(217, 14, 21, 0.3)";
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.borderColor = "#ccc";
+              e.target.style.boxShadow = "none";
+            }}
+          />
+
+          <button
+            onClick={handleSearch}
+            className={styles.searchBtn}
+            style={{
+              marginLeft: "8px",
+              border: "none",
+              background: "none",
+              fontSize: "20px",
+              cursor: "pointer",
+              transition: "transform 0.2s",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.2)")}
+            onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+          >
+            🔍
+          </button>
+
+          <button
+            className={styles.searchBtn}
+            style={{
+              marginLeft: "4px",
+              border: "none",
+              background: "none",
+              fontSize: "20px",
+              cursor: "pointer",
+              transition: "transform 0.2s",
+            }}
+            onClick={() => setShowFilters(!showFilters)}
+            onMouseEnter={(e) => (e.currentTarget.style.transform = "rotate(20deg)")}
+            onMouseLeave={(e) => (e.currentTarget.style.transform = "rotate(0deg)")}
+          >
+            🔦
+        </button>
         </div>
+
+        {showFilters && (
+          <div
+            style={{
+              margin: "12px auto",
+              padding: "20px",
+              width: "320px",
+              background: "rgba(255, 255, 255, 0.95)",
+              backdropFilter: "blur(8px)",
+              borderRadius: "20px",
+              boxShadow: "0 8px 20px rgba(0, 0, 0, 0.12)",
+              border: "1px solid #eee",
+              transition: "all 0.3s ease-in-out",
+              display: "flex",
+              flexDirection: "column",
+              gap: "16px",
+              zIndex: 999,
+            }}
+          >
+            <div>
+              <label style={{ fontWeight: "bold", fontSize: "14px", marginBottom: "6px", display: "block" }}>
+                🧭 위치 필터
+              </label>
+              <select
+                value={selectedLocation}
+                onChange={(e) => setSelectedLocation(e.target.value)}
+                style={{
+                  width: "100%",
+                  padding: "10px 14px",
+                  borderRadius: "14px",
+                  border: "1px solid #ddd",
+                  backgroundColor: "#fff",
+                  fontSize: "15px",
+                  transition: "border-color 0.2s ease-in-out",
+                  outline: "none",
+                }}
+                onMouseEnter={(e) => e.target.style.borderColor = "#D90E15"}
+                onMouseLeave={(e) => e.target.style.borderColor = "#ddd"}
+              >
+                <option value="">전체 위치</option>
+                {["정문", "쪽문", "서문", "북문", "농장문", "텍문", "동문", "교내"].map((loc) => (
+                  <option key={loc} value={loc}>{loc}</option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label style={{ fontWeight: "bold", fontSize: "14px", marginBottom: "6px", display: "block" }}>
+                🍽️ 분야 필터
+              </label>
+              <select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                style={{
+                  width: "100%",
+                  padding: "10px 14px",
+                  borderRadius: "14px",
+                  border: "1px solid #ddd",
+                  backgroundColor: "#fff",
+                  fontSize: "15px",
+                  transition: "border-color 0.2s ease-in-out",
+                  outline: "none",
+                }}
+                onMouseEnter={(e) => e.target.style.borderColor = "#D90E15"}
+                onMouseLeave={(e) => e.target.style.borderColor = "#ddd"}
+              >
+                <option value="">전체 분야</option>
+                {["카페", "음식점", "편의점"].map((cat) => (
+                  <option key={cat} value={cat}>{cat}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+        )}
+
 
         <div className={styles.contentRow}>
           <section className={styles.leftPanel}>
             <div className={styles.tabRow}>
-              <button>인기</button>
-              <button>관심</button>
-              <span className={styles.yearInfo}>기준 년도 : 2025</span>
             </div>
 
-            {places.length === 0 ? (
-              <div style={{ color: "#bbb", marginTop: 40, textAlign: "center" }}>장소 데이터가 없습니다.</div>
+            {filteredPlaces.length === 0 ? (
+              <div style={{ color: "#bbb", marginTop: 40, textAlign: "center" }}>검색 결과가 없습니다.</div>
             ) : (
-              places.map((place) => {
+              filteredPlaces.map((place) => {
                 const avgRating = getAverageRating(place.url);
                 return (
                   <div className={styles.placeCard} key={place.url}>
