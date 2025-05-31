@@ -18,43 +18,16 @@ export default function Home() {
   const [showNavbar, setShowNavbar] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredPlaces, setFilteredPlaces] = useState([]);
-
+  const [favorites, setFavorites] = useState([]);
   const [showFilters, setShowFilters] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [sortOption, setSortOption] = useState("");
 
   const fuse = new Fuse(places, {
-    keys: ["name", "위치", "분야"], // 검색 대상 필드 지정
-    threshold: 0.3, // 정확도 (낮을수록 엄격)
+    keys: ["name", "위치", "분야"],
+    threshold: 0.3,
   });
-
-  const [sortOption, setSortOption] = useState(""); // "찜순" | "리뷰순"
-
-  const sortPlaces = (places) => {
-    const sorted = [...places];
-    if (sortOption === "찜순") {
-      sorted.sort((a, b) =>
-        favorites.filter(f => f.url === b.url).length - favorites.filter(f => f.url === a.url).length
-      );
-    } else if (sortOption === "리뷰순") {
-      sorted.sort((a, b) =>
-        reviews.filter(r => r.placeId === b.url).length - reviews.filter(r => r.placeId === a.url).length
-      );
-    } else if (sortOption === "평점순") {
-      sorted.sort((a, b) =>
-        getAverageRating(b.url) - getAverageRating(a.url)
-      );
-    } else if (sortOption === "이름순") {
-      sorted.sort((a, b) => a.name.localeCompare(b.name, 'ko', { sensitivity: 'base' }));
-    } else if (sortOption === "최신순") {
-      sorted.sort((a, b) =>
-        new Date(b.createdAt) - new Date(a.createdAt)
-      );
-    }
-    return sorted;
-  };
-
-  
 
   useEffect(() => {
     fetch("/data/places.json")
@@ -64,25 +37,39 @@ export default function Home() {
         console.error("장소 데이터 불러오기 실패:", err);
         setPlaces([]);
       });
-
-    fetch("/data/reviews.json")
-      .then((res) => res.json())
-      .then((data) => setReviews(data))
-      .catch((err) => {
-        console.error("리뷰 데이터 불러오기 실패:", err);
-        setReviews([]);
-      });
   }, []);
 
-  useEffect(() => {
-    if (user) {
-      const userEmail = user.email;
-      const userSubmittedReviews = reviews.filter(r => r.user === userEmail);
-      setUserReviews(userSubmittedReviews);
+  const loadReviewsFromFirestore = async () => {
+    try {
+      const res = await fetch("/api/loadReviews");
+      const data = await res.json();
+      const allReviews = Array.isArray(data.reviews) ? data.reviews : [];
+      setReviews(allReviews);
+      if (user) {
+        const userFiltered = allReviews.filter(r => r.user === user.email);
+        setUserReviews(userFiltered);
+      }
+    } catch (err) {
+      console.error("리뷰 데이터 불러오기 실패:", err);
+      setReviews([]);
+      setUserReviews([]);
     }
-  }, [reviews, user]);
+  };
 
-  const [favorites, setFavorites] = useState([]);
+  useEffect(() => {
+    loadReviewsFromFirestore();
+  }, [user]);
+
+  useEffect(() => {
+  const handleRouteChange = (url) => {
+    if (url === "/") {
+      console.log("[DEBUG] 메인으로 이동됨 → 리뷰 리로드");
+      loadReviewsFromFirestore();
+    }
+  };
+  router.events.on("routeChangeComplete", handleRouteChange);
+  return () => router.events.off("routeChangeComplete", handleRouteChange);
+}, [router]);
 
   useEffect(() => {
     if (user && typeof window !== "undefined") {
@@ -98,7 +85,6 @@ export default function Home() {
     }
   }, [favorites, user]);
 
-  
   useEffect(() => {
     const filtered = places.filter((p) =>
       (!selectedLocation || p.위치 === selectedLocation) &&
@@ -106,10 +92,9 @@ export default function Home() {
     );
     const sorted = sortPlaces(filtered);
     setFilteredPlaces(sorted);
-  }, [places, sortOption, selectedLocation, selectedCategory]);
+  }, [places, sortOption, selectedLocation, selectedCategory, reviews]);
 
-
-useEffect(() => {
+  useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 300) {
         setShowNavbar(true);
@@ -121,43 +106,24 @@ useEffect(() => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  
-  
-  const normalize = (str) =>
-  str.toLowerCase().replace(/\s+/g, "").replace(/[^a-z0-9가-힣]/gi, "");
-
   const toggleFavorite = (place) => {
-  if (!user) {
-    alert("즐겨찾기는 로그인한 사용자만 이용할 수 있습니다.");
-    return;
-  }
-
-  const key = `favorites_${user.uid}`;
-  const isFav = favorites.find(f => f.url === place.url);
-  const updated = isFav
-    ? favorites.filter(f => f.url !== place.url)
-    : [...favorites, place];
-
-  setFavorites(updated);
-  localStorage.setItem(key, JSON.stringify(updated));
-};
-
-  const isFavorite = (placeUrl) => {
-    return favorites.some(f => f.url === placeUrl);
+    if (!user) {
+      alert("즐겨찾기는 로그인한 사용자만 이용할 수 있습니다.");
+      return;
+    }
+    const key = `favorites_${user.uid}`;
+    const isFav = favorites.find(f => f.url === place.url);
+    const updated = isFav ? favorites.filter(f => f.url !== place.url) : [...favorites, place];
+    setFavorites(updated);
+    localStorage.setItem(key, JSON.stringify(updated));
   };
 
-  const goToFavorite = () => {
-    router.push({
-      pathname: "/favorite",
-      query: { data: encodeURIComponent(JSON.stringify(favorites)) }
-    });
-  };
+  const isFavorite = (placeUrl) => favorites.some(f => f.url === placeUrl);
 
   const getAverageRating = (placeId) => {
     const ratings = reviews.filter(r => r.placeId === placeId).map(r => r.rating);
     if (ratings.length === 0) return 0;
-    const avg = ratings.reduce((a, b) => a + b, 0) / ratings.length;
-    return avg;
+    return ratings.reduce((a, b) => a + b, 0) / ratings.length;
   };
 
   const hasUserReviewed = (placeId) => {
@@ -166,7 +132,7 @@ useEffect(() => {
   };
 
   const handleSearch = () => {
-    if (!searchQuery.trim()) {
+    if (!searchQuery.trim()) {  
       const filtered = places.filter((p) =>
         (!selectedLocation || p.위치 === selectedLocation) &&
         (!selectedCategory || p.분야 === selectedCategory)
@@ -174,12 +140,6 @@ useEffect(() => {
       setFilteredPlaces(filtered);
       return;
     }
-
-    const fuse = new Fuse(places, {
-      keys: ["name", "위치", "분야"],
-      threshold: 0.3,
-    });
-
     const results = fuse.search(searchQuery).map(r => r.item);
     const filtered = results.filter((p) =>
       (!selectedLocation || p.위치 === selectedLocation) &&
@@ -188,15 +148,38 @@ useEffect(() => {
     setFilteredPlaces(filtered);
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
+
+
   const isRecent = (createdAt) => {
     const created = new Date(createdAt);
     const now = new Date();
     const diffInDays = (now - created) / (1000 * 60 * 60 * 24);
-    return diffInDays <= 7; // 최근 7일이면 "NEW"
+    return diffInDays <= 7;
   };
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") handleSearch();
+  const sortPlaces = (places) => {
+    const sorted = [...places];
+    if (sortOption === "찜순") {
+      sorted.sort((a, b) => favorites.filter(f => f.url === b.url).length - favorites.filter(f => f.url === a.url).length);
+    } else if (sortOption === "리뷰순") {
+      sorted.sort((a, b) => reviews.filter(r => r.placeId === b.url).length - reviews.filter(r => r.placeId === a.url).length);
+    } else if (sortOption === "평점순") {
+      sorted.sort((a, b) => getAverageRating(b.url) - getAverageRating(a.url));
+    } else if (sortOption === "이름순") {
+      sorted.sort((a, b) => a.name.localeCompare(b.name, 'ko', { sensitivity: 'base' }));
+    } else if (sortOption === "최신순") {
+      sorted.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    }
+    return sorted;
+  };
+
+  const goToFavorite = () => {
+    router.push({ pathname: "/favorite", query: { data: encodeURIComponent(JSON.stringify(favorites)) } });
   };
 
   return (
@@ -208,7 +191,6 @@ useEffect(() => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/* 🧷 고정 상단 */}
       <header className={`${styles.header} ${showNavbar ? styles.headerVisible : styles.headerHidden}`}>
         <div className={styles.logo} onClick={() => router.push("/")}>KNUMAP</div>
         <nav className={styles.menu}>
@@ -221,34 +203,25 @@ useEffect(() => {
             <>
               <a href="#" onClick={(e) => { e.preventDefault(); router.push("/profile"); }}>내 정보</a>
               <span style={{ margin: "0 6px" }}>|</span>
-              <a
-                href="#"
-                onClick={async (e) => {
-                  localStorage.removeItem(`favorites_${user.uid}`);
-                  
-                  e.preventDefault();
-                  await signOut(auth);
-                  setFavorites([]); // ✅ 로그아웃하면 즐겨찾기 비움
-                  alert("로그아웃 되었습니다.");
-                  router.push("/");
-                }}
-              >
-                로그아웃
-              </a>
+              <a href="#" onClick={async (e) => {
+                e.preventDefault();
+                localStorage.removeItem(`favorites_${user.uid}`);
+                await signOut(auth);
+                setFavorites([]);
+                alert("로그아웃 되었습니다.");
+                router.push("/");
+              }}>로그아웃</a>
             </>
-
           ) : (
             <>
               <a href="#" onClick={(e) => { e.preventDefault(); router.push("/login"); }}>로그인</a>
               <span style={{ margin: "0 6px" }}>|</span>
               <a href="#" onClick={(e) => { e.preventDefault(); router.push("/signup"); }}>회원가입</a>
-              
             </>
           )}
         </div>
       </header>
 
-      {/* Hero Section */}
       <Hero />
       
       {/* 나머지 장소 리스트 메인 콘텐츠 */}
