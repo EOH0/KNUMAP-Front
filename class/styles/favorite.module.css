@@ -21,8 +21,15 @@
   align-items: center;
   gap: 10px;
   width: 100%;
-  max-width: 320px;
+  max-width: 600px;
   min-width: 220px;
+}
+
+.placeCard:hover {
+  box-shadow: 0 4px 20px rgba(217, 14, 21, 0.13);
+  border: 1.5px solid #D90E15;
+  transform: translateY(-2px) scale(1.01);
+  background: #fff6f6;
 }
 
 .placeHeader {
