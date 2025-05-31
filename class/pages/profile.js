@@ -245,6 +245,9 @@ export default function Profile() {
                   {collegeDepartments[selectedCollege]?.map((dept) => (
                     <option key={dept} value={dept}>{dept}</option>
                   ))}
+                  {collegeDepartments[selectedCollege].map((dept) => (
+                    <option key={dept} value={dept}>{dept}</option>
+                  ))}
                 </select>
               </div>
             )}
