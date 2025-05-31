@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "build:ssr": "next build && xcopy /E /I /Y .next functions\\.next && copy next.config.js functions\\"
   },
   "dependencies": {
     "@apollo/client": "^3.13.8",

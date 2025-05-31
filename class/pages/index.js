@@ -1,4 +1,6 @@
 import Head from "next/head";
+import { doc, getDoc, updateDoc, setDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+import { db } from "../lib/firebase";
 import { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 import styles from "../styles/Main.module.css";
@@ -38,6 +40,17 @@ export default function Home() {
         setPlaces([]);
       });
   }, []);
+
+  const saveFavoritesToFirestore = async (updatedFavorites) => {
+    if (!user) return;
+    const userRef = doc(db, "users", user.uid);
+
+    try {
+      await setDoc(userRef, { favorites: updatedFavorites }, { merge: true });
+    } catch (err) {
+      console.error("즐겨찾기 Firestore 저장 오류:", err);
+    }
+  };
 
   const loadReviewsFromFirestore = async () => {
     try {
@@ -111,11 +124,16 @@ export default function Home() {
       alert("즐겨찾기는 로그인한 사용자만 이용할 수 있습니다.");
       return;
     }
+
     const key = `favorites_${user.uid}`;
     const isFav = favorites.find(f => f.url === place.url);
-    const updated = isFav ? favorites.filter(f => f.url !== place.url) : [...favorites, place];
+    const updated = isFav
+      ? favorites.filter(f => f.url !== place.url)
+      : [...favorites, place];
+
     setFavorites(updated);
     localStorage.setItem(key, JSON.stringify(updated));
+    saveFavoritesToFirestore(updated); // ✅ Firestore 저장도 반영
   };
 
   const isFavorite = (placeUrl) => favorites.some(f => f.url === placeUrl);
@@ -153,6 +171,19 @@ export default function Home() {
       handleSearch();
     }
   };
+
+  useEffect(() => {
+    const loadFavoritesFromFirestore = async () => {
+      if (!user) return;
+      const userRef = doc(db, "users", user.uid);
+      const snap = await getDoc(userRef);
+      if (snap.exists() && snap.data().favorites) {
+        setFavorites(snap.data().favorites);
+        localStorage.setItem(`favorites_${user.uid}`, JSON.stringify(snap.data().favorites));
+      }
+    };
+    loadFavoritesFromFirestore();
+  }, [user]);
 
 
   const isRecent = (createdAt) => {
@@ -409,10 +440,6 @@ export default function Home() {
                       />
                       <div>
                         <div className={styles.placeName}>{place.name}</div>
-                          {place.name}
-                          {place.createdAt && isRecent(place.createdAt) && (
-                            <span className={styles.newBadge}>NEW</span>
-                          )}
                           {/* ✅ 여기: 전화번호 추가 */}
                           <div style={{ marginTop: 4 }}>
                             {place.phone ? (

@@ -39,6 +39,22 @@ export default function Login() {
       <button className={styles.authButton} onClick={handleLogin}>
         로그인
       </button>
+      <div style={{ marginTop: "12px", textAlign: "center", fontSize: "14px" }}>
+        <a href="#" onClick={(e) => {
+          e.preventDefault();
+          router.push("/findEmail");
+        }} style={{ color: "#007bff", textDecoration: "underline" }}>
+          이메일(아이디)을 잊으셨나요?
+        </a>
+      </div>
+      <div style={{ marginTop: "16px", textAlign: "center", fontSize: "14px" }}>
+        <a href="#" onClick={(e) => {
+          e.preventDefault();
+          router.push("/resetPassword");
+        }} style={{ color: "#007bff", textDecoration: "underline" }}>
+          비밀번호를 잊으셨나요?
+        </a>
+      </div>
     </div>
   );
 }
