@@ -421,7 +421,7 @@ useEffect(() => {
               filteredPlaces.map((place) => {
                 const avgRating = getAverageRating(place.url);
                 const ratingClass =
-                  avgRating >= 4.0 ? styles.highRating :
+                  avgRating >= 4.5 ? styles.highRating :
                   avgRating < 3 ? styles.lowRating :
                   "";
                 
