@@ -54,30 +54,11 @@ export default function Partner() {
         <nav className={styles.menu}>
           <button onClick={() => router.push("/partner")}>제휴</button>
           <button onClick={() => router.push("/social")}>소셜</button>
-          <button onClick={goToFavorite}>즐겨찾기</button>
+          <button onClick={() => router.push("/favorite")}>즐겨찾기</button>
         </nav>
         <div className={styles.userMenu}>
-          {user ? (
-            <>
-              <a href="#" onClick={(e) => { e.preventDefault(); router.push("/profile"); }}>내 정보</a>
-              <span style={{ margin: "0 6px" }}>|</span>
-              <a href="#" onClick={async (e) => {
-                e.preventDefault();
-                localStorage.removeItem(`favorites_${user.uid}`);
-                await signOut(auth);
-                setFavorites([]);
-                alert("로그아웃 되었습니다.");
-                router.push("/");
-              }}>로그아웃</a>
-            </>
-          ) : (
-            <>
-              <a href="#" onClick={(e) => { e.preventDefault(); router.push("/login"); }}>로그인</a>
-              <span style={{ margin: "0 6px" }}>|</span>
-              <a href="#" onClick={(e) => { e.preventDefault(); router.push("/signup"); }}>회원가입</a>
-            </>
-          )}
-        </div>
+          <a href="#" onClick={(e) => { e.preventDefault(); router.push("/profile"); }}>내 정보</a>
+        </div> 
       </header>
 
       <main className={styles.main}>
