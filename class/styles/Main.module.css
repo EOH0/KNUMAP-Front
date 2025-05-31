@@ -1,0 +1,470 @@
+/* --- 기본 레이아웃 --- */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 40px 18px 32px;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.logo {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #D90E15;
+  letter-spacing: 2px;
+}
+.menu button {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  margin-right: 24px;
+  color: #333;
+  cursor: pointer;
+}
+.menu button:last-child { margin-right: 0; }
+.userMenu {
+  font-size: 0.95rem;
+  color: #888;
+}
+.userMenu a {
+  color: #D90E15;
+  text-decoration: none;
+  margin: 0 2px;
+}
+.main {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 32px 0 0 0;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.pageTitle {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 24px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+.filterRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  background: #f5f7fa;
+  padding: 18px 24px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+.searchInput {
+  flex: 1.5;
+  padding: 10px 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+.searchInput:hover,
+.filterSelect:hover {
+  border-color: #D90E15;
+  background: #fff6f6;
+}
+
+.searchInput:focus,
+.filterSelect:focus {
+  border-color: #D90E15;
+  outline: none;
+  background: #fff6f6;
+}
+
+@media (prefers-color-scheme: dark) {
+  .searchInput:hover,
+  .filterSelect:hover {
+    border-color: #D90E15;
+    background: #2a1818;
+  }
+  .searchInput:focus,
+  .filterSelect:focus {
+    border-color: #D90E15;
+    outline: none;
+    background: #2a1818;
+  }
+}
+
+.searchBtn {
+  background: #D90E15;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 18px;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+.filterSelect {
+  flex: 1;
+  padding: 10px 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: #fff;
+}
+.applyBtn {
+  background: #D90E15;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 18px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-left: 8px;
+}
+.contentRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 24px;
+}
+
+/* --- 박스형 리스트 스타일 --- */
+.leftPanel {
+  width: 600px;
+  min-width: 320px;
+  max-width: 90vw;
+  background: none;
+  padding: 0;
+}
+.tabRow {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.tabRow button {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-right: 12px;
+  padding: 6px 18px;
+  border-radius: 6px 6px 0 0;
+  cursor: pointer;
+  color: #888;
+}
+.tabActive {
+  background: #D90E15;
+  color: #fff !important;
+}
+.yearInfo {
+  font-size: 0.9rem;
+  color: #e74c3c;
+  margin-left: auto;
+}
+
+/* 박스형 장소 아이템 */
+.placeCard {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 20px 22px 16px 22px;
+  margin-bottom: 22px;
+  box-shadow: 0 2px 12px rgba(217, 14, 21, 0.06);
+  transition: box-shadow 0.18s, border 0.18s, transform 0.12s;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.placeCard:hover {
+  box-shadow: 0 4px 20px rgba(217, 14, 21, 0.13);
+  border: 1.5px solid #D90E15;
+  transform: translateY(-2px) scale(1.01);
+  background: #fff6f6;
+}
+.placeHeader {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.placeLogo {
+  width: 54px;
+  height: 54px;
+  border-radius: 12px;
+  background: #f5f7fa;
+  object-fit: cover;
+  border: 1px solid #eee;
+}
+.placeName {
+  font-size: 1.18rem;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+.placeType {
+  font-size: 0.97rem;
+  color: #888;
+}
+.starBtn {
+  margin-left: auto;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  color: #f1c40f;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+.starBtn:hover {
+  transform: scale(1.2);
+}
+.placeInfo {
+  display: flex;
+  gap: 24px;
+  font-size: 1rem;
+  color: #555;
+  margin-left: 70px;
+}
+.infoNum {
+  color: #D90E15;
+  font-weight: bold;
+  margin-left: 4px;
+}
+.placeFooter {
+  display: flex;
+  gap: 8px;
+  margin-left: 70px;
+}
+.linkBtn {
+  background: none;
+  border: 1px solid #D90E15;
+  border-radius: 6px;
+  padding: 5px 14px;
+  font-size: 0.97rem;
+  color: #D90E15;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.linkBtn:hover {
+  background: #D90E15;
+  color: #fff;
+}
+
+/* --- 다크모드 스타일 --- */
+@media (prefers-color-scheme: dark) {
+  .header {
+    background: #23272a;
+    border-bottom: 1px solid #333;
+  }
+  .logo {
+    color: #D90E15;
+  }
+  .menu button {
+    color: #f1f1f1;
+  }
+  .userMenu {
+    color: #bbb;
+  }
+  .userMenu a {
+    color: #D90E15;
+  }
+  .main {
+    background: #181a1b;
+    color: #f1f1f1;
+  }
+  .filterRow {
+    background: #23272a;
+    border: 1px solid #333;
+  }
+  .searchInput, .filterSelect {
+    background: #23272a;
+    color: #f1f1f1;
+    border: 1px solid #444;
+  }
+  .searchBtn, .applyBtn {
+    background: #D90E15;
+    color: #fff;
+  }
+  .leftPanel {
+    background: none;
+  }
+  .placeCard {
+    background: #23272a;
+    border: 1.5px solid #333;   /* 기존: #D90E15 → #333 */
+    color: #f1f1f1;
+    box-shadow: 0 2px 12px rgba(217, 14, 21, 0.10);
+  }
+  .placeCard:hover {
+    background: #2a1818;
+    box-shadow: 0 4px 20px rgba(217, 14, 21, 0.18);
+    border: 1.5px solid #D90E15; /* hover 시만 빨간색 강조(원하면 유지, 아니면 #444 등으로) */
+  }
+  .placeLogo {
+    background: #181a1b;
+    border: 1px solid #333;
+  }
+  .tabRow button {
+    color: #bbb;
+    background: none;
+  }
+  .tabActive {
+    background: #D90E15;
+    color: #fff !important;
+  }
+  .yearInfo {
+    color: #ff7675;
+  }
+  .linkBtn {
+    background: none;
+    color: #D90E15;
+    border: 1px solid #D90E15;
+  }
+  .linkBtn:hover {
+    background: #D90E15;
+    color: #fff;
+  }
+  .starBtn {
+    color: #ffe066;
+  }
+  .infoNum {
+    color: #D90E15;
+  }
+  
+}
+
+/* 상균이가 추가함 */
+.authContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 80px;
+}
+
+.inputBox {
+  width: 300px;
+  padding: 12px;
+  margin: 8px 0;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.authButton {
+  background-color: #D90E15;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: background-color 0.2s ease;
+}
+
+.authButton:hover {
+  background-color: #D90E15;
+}
+
+.placeCard:hover {
+  transform: scale(1.01);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease-in-out;
+}
+
+.headerHidden {
+  opacity: 0;
+  transform: translateY(-100%);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.headerVisible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.searchInput {
+  padding: 12px 20px;
+  border: 2px solid #ddd;
+  border-radius: 25px;
+  background: #fff;
+  font-size: 16px;
+  color: #333;
+  width: 60%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.searchInput::placeholder {
+  color: #aaa;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: #D90E15;
+  box-shadow: 0 4px 12px rgba(217, 14, 21, 0.3);
+}
+
+.searchBtn {
+  margin-left: 10px;
+  padding: 12px 20px;
+  background-color: #D90E15;
+  border: none;
+  border-radius: 25px;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(217, 14, 21, 0.3);
+  transition: background-color 0.3s ease;
+}
+
+.searchBtn:hover {
+  background-color: #b50a11;
+}
+
+.placeCard.highRating {
+  background-color: #fff6f6; /* 옅은 핑크 */
+}
+.placeCard.lowRating {
+  background-color: #f9f9f9; /* 연한 회색 */
+}
+
+.newBadge {
+  background-color: #d90e15;
+  color: white;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 8px;
+  margin-left: 6px;
+  vertical-align: middle;
+  font-weight: bold;
+}
+
+.placeCard {
+  transition: box-shadow 0.3s ease;
+}
+
+.placeCard:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.starBtn {
+  color: #ccc;
+  font-size: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.starBtn:hover {
+  color: #D90E15;
+  transform: scale(1.2);
+}
+
+.favOn {
+  color: #D90E15;
+}

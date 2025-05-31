@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+=======
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* ✅ 수평 스크롤 방지 */
+}
+
+>>>>>>> main
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -36,7 +45,15 @@ a {
 }
 
 @media (prefers-color-scheme: dark) {
+<<<<<<< HEAD
   html {
     color-scheme: dark;
   }
 }
+=======
+  body {
+    background: #181a1b;
+    color: #f1f1f1;
+  }
+}
+>>>>>>> main
