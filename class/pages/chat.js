@@ -8,7 +8,9 @@ import {
   query,
   orderBy,
   onSnapshot,
-  serverTimestamp
+  serverTimestamp,
+  doc,
+  getDoc
 } from "firebase/firestore";
 import { UserContext } from "../lib/UserContext";
 
@@ -19,6 +21,7 @@ export default function ChatPage() {
 
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [targetFavorites, setTargetFavorites] = useState([]);
 
   const chatId = user && targetUid
     ? [user.uid, targetUid].sort().join("_")
@@ -35,6 +38,23 @@ export default function ChatPage() {
     });
     return () => unsubscribe();
   }, [chatId]);
+
+  useEffect(() => {
+    const fetchTargetFavorites = async () => {
+      if (!targetUid) return;
+      try {
+        const snap = await getDoc(doc(db, "users", targetUid));
+        if (snap.exists()) {
+          const data = snap.data();
+          const favorites = data.favorites || [];
+          setTargetFavorites(favorites);
+        }
+      } catch (err) {
+        console.error("상대방 즐겨찾기 불러오기 실패:", err);
+      }
+    };
+    fetchTargetFavorites();
+  }, [targetUid]);
 
   const handleSend = async () => {
     if (!user || !newMessage.trim()) return;
@@ -86,6 +106,20 @@ export default function ChatPage() {
       `}</style>
 
       <h2 style={{ textAlign: "center", color: "#333", marginBottom: "24px" }}>💬 채팅</h2>
+
+      <button
+        onClick={() => router.back()}
+        style={{
+          marginBottom: "16px",
+          background: "transparent",
+          border: "1px solid #ccc",
+          borderRadius: "12px",
+          padding: "6px 12px",
+          cursor: "pointer"
+        }}
+      >
+        ← 뒤로가기
+      </button>
 
       <div style={{
         borderRadius: "16px",
@@ -144,6 +178,19 @@ export default function ChatPage() {
             fontWeight: "bold"
           }}
         >전송</button>
+      </div>
+
+      <div style={{ marginTop: "32px" }}>
+        <h3 style={{ fontSize: "18px", marginBottom: "12px" }}>🎯 상대방 즐겨찾기</h3>
+        {targetFavorites.length === 0 ? (
+          <p style={{ color: "#888" }}>즐겨찾기한 장소가 없습니다.</p>
+        ) : (
+          <ul style={{ padding: 0, listStyle: "none" }}>
+            {targetFavorites.map((item, idx) => (
+              <li key={idx} style={{ marginBottom: "8px", color: "#333" }}>• {item}</li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );
