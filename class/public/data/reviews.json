@@ -35,13 +35,6 @@
     "date": "2025-05-30T14:31:11.643Z"
   },
   {
-<<<<<<< HEAD
-    "placeId": "http://place.map.kakao.com/27392978",
-    "user": "123@gmail.com",
-    "rating": 4,
-    "text": "ㅁㄴㄹㅇㅁㄴㅇㄻㄴㄹ",
-    "date": "2025-05-31T00:45:18.182Z"
-=======
     "placeId": "http://place.map.kakao.com/1290987981",
     "user": "jinjin@gmail.com",
     "rating": 5,
@@ -68,6 +61,5 @@
     "rating": 5,
     "text": "레전드 반미리코 당근피자 드세요 ㅋㅋ",
     "date": "2025-05-31T00:55:04.606Z"
->>>>>>> 4bfcdb574b4baa3ea70d8a6047d444d3d25ff20f
   }
 ]

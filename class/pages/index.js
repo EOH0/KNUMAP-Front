@@ -1,14 +1,4 @@
 import Head from "next/head";
-<<<<<<< HEAD
-
-export default function Home() {
-  return (
-    <>
-      
-    </>
-  );
-}
-=======
 import { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 import styles from "../styles/Main.module.css";
@@ -493,4 +483,3 @@ export default function Home() {
     </>
   );
 }
->>>>>>> main

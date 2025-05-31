@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-import "@/styles/globals.css";
-
-export default function App({ Component, pageProps }) {
-  return <Component {...pageProps} />;
-}
-=======
 import { useState, useEffect } from "react";
 import { createContext } from "react";
 import { UserContext } from "../lib/UserContext";
@@ -26,4 +19,3 @@ export default function App({ Component, pageProps }) {
     </UserContext.Provider>
   );
 }
->>>>>>> main
