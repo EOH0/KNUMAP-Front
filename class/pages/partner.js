@@ -4,7 +4,7 @@ import { UserContext } from "../lib/UserContext";
 import { getDoc, doc } from "firebase/firestore";
 import { db } from "../lib/firebase";
 import styles from "../styles/Main.module.css";
-import cardStyles from "../styles/partner.module.css"; // 👈 새 CSS 파일 분리 추천
+import cardStyles from "../styles/partner.module.css";
 
 export default function Partner() {
   const user = useContext(UserContext);
@@ -13,6 +13,7 @@ export default function Partner() {
   const [partnerData, setPartnerData] = useState([]);
   const [filteredPartners, setFilteredPartners] = useState([]);
 
+  // 사용자 단과대학 정보 불러오기
   useEffect(() => {
     const fetchUserCollege = async () => {
       if (!user) return;
@@ -29,6 +30,7 @@ export default function Partner() {
     fetchUserCollege();
   }, [user]);
 
+  // 제휴 JSON 불러오기
   useEffect(() => {
     fetch("/data/제휴정보.json")
       .then((res) => res.json())
@@ -36,6 +38,7 @@ export default function Partner() {
       .catch((err) => console.error("제휴 정보 로딩 실패:", err));
   }, []);
 
+  // 사용자 단대에 맞는 항목 필터링
   useEffect(() => {
     if (!userCollege || partnerData.length === 0) return;
     const filtered = partnerData.filter((p) => p.단대 === userCollege);
@@ -76,6 +79,27 @@ export default function Partner() {
                     <span>⏰ 기간: {p.period}</span><br />
                     <span>👤 대상: {p.who}</span>
                   </div>
+
+                  {/* ⬇️ 지도에서 보기 버튼 */}
+                  <button
+                    className={cardStyles.searchButton}
+                    onClick={() => router.push(`/map?keyword=${encodeURIComponent(p.name)}`)}
+                  >
+                    지도에서 보기
+                  </button>
+                </div>
+
+                <div className={cardStyles.cardRight}>
+                  <img
+                    src={`/data/partner/images/${p.name.replace(/\s/g, "_")}.jpg`}
+                    alt={`${p.name} 썸네일`}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "/data/image.jpg";
+                    }}
+                  />
+
+                  {/* ⬇️ 아이콘 위치를 이미지 아래로 */}
                   <div className={cardStyles.partnerLinks}>
                     <a href={p.url} target="_blank" rel="noreferrer">
                       <img src="/icons/kakao.png" alt="카카오맵" />
@@ -85,19 +109,8 @@ export default function Partner() {
                     </a>
                   </div>
                 </div>
-
-                <div className={cardStyles.cardRight}>
-                  <img
-                    src={`/data/partner/images/${p.name.replace(/\s/g, "_")}.jpg`}
-                    alt={`${p.name} 썸네일`}
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = "/data/image.jpg"; // 기본 이미지로 대체
-                    }}
-                  />
-                </div>
               </div>
-          ))}
+            ))}
           </div>
         )}
       </main>
