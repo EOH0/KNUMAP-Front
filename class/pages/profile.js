@@ -1,3 +1,4 @@
+// pages/profile.js
 import { useContext, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { signOut } from "firebase/auth";
@@ -10,6 +11,7 @@ import styles from "../styles/Main.module.css";
 export default function Profile() {
   const user = useContext(UserContext);
   const router = useRouter();
+  const { uid: targetUid } = router.query;
   const fileInputRef = useRef(null);
   const [profileImg, setProfileImg] = useState("/knu-default.png");
   const [hovered, setHovered] = useState(false);
@@ -35,12 +37,12 @@ export default function Profile() {
   };
   const collegeOptions = Object.keys(collegeDepartments);
 
-  // Firestore에서 사용자 정보 불러오기
   useEffect(() => {
     const loadUserProfile = async () => {
-      if (!user) return;
+      const uid = targetUid || user?.uid;
+      if (!uid) return;
       try {
-        const docSnap = await getDoc(doc(db, "users", user.uid));
+        const docSnap = await getDoc(doc(db, "users", uid));
         if (docSnap.exists()) {
           const data = docSnap.data();
           setName(data.name || "");
@@ -53,7 +55,7 @@ export default function Profile() {
       }
     };
     loadUserProfile();
-  }, [user]);
+  }, [user, targetUid]);
 
   const handleLogout = async () => {
     await signOut(auth);
@@ -109,10 +111,12 @@ export default function Profile() {
     }
   };
 
-  if (!user) {
+  if (!user && !targetUid) {
     if (typeof window !== "undefined") router.push("/login");
     return <div style={{ padding: 40 }}>로그인이 필요합니다...</div>;
   }
+
+  const isMyProfile = !targetUid || targetUid === user?.uid;
 
   return (
     <>
@@ -144,7 +148,7 @@ export default function Profile() {
             style={{ position: "relative", width: "120px", height: "120px", margin: "0 auto", marginBottom: "24px" }}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
-            onClick={() => fileInputRef.current.click()}
+            onClick={() => isMyProfile && fileInputRef.current.click()}
           >
             <img
               src={profileImg}
@@ -155,11 +159,11 @@ export default function Profile() {
                 borderRadius: "50%",
                 border: "2px solid #ccc",
                 objectFit: "cover",
-                cursor: "pointer",
+                cursor: isMyProfile ? "pointer" : "default",
               }}
               onError={(e) => { e.target.onerror = null; e.target.src = "/knu-default.png"; }}
             />
-            {hovered && (
+            {hovered && isMyProfile && (
               <div style={{
                 position: "absolute",
                 top: 0, left: 0, width: "100%", height: "100%",
@@ -188,9 +192,11 @@ export default function Profile() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="이름을 입력하세요"
+                disabled={!isMyProfile}
                 style={{
                   width: "100%", padding: "10px", fontSize: "16px",
-                  borderRadius: "8px", border: "1px solid #ccc", marginTop: "4px"
+                  borderRadius: "8px", border: "1px solid #ccc", marginTop: "4px",
+                  backgroundColor: isMyProfile ? "#fff" : "#eee"
                 }}
               />
             </div>
@@ -203,9 +209,11 @@ export default function Profile() {
                   setSelectedCollege(e.target.value);
                   setSelectedDepartment("");
                 }}
+                disabled={!isMyProfile}
                 style={{
                   width: "100%", padding: "10px", fontSize: "16px",
-                  borderRadius: "8px", border: "1px solid #ccc", marginTop: "4px"
+                  borderRadius: "8px", border: "1px solid #ccc", marginTop: "4px",
+                  backgroundColor: isMyProfile ? "#fff" : "#eee"
                 }}
               >
                 <option value="">선택하세요</option>
@@ -221,9 +229,11 @@ export default function Profile() {
                 <select
                   value={selectedDepartment}
                   onChange={(e) => setSelectedDepartment(e.target.value)}
+                  disabled={!isMyProfile}
                   style={{
                     width: "100%", padding: "10px", fontSize: "16px",
-                    borderRadius: "8px", border: "1px solid #ccc", marginTop: "4px"
+                    borderRadius: "8px", border: "1px solid #ccc", marginTop: "4px",
+                    backgroundColor: isMyProfile ? "#fff" : "#eee"
                   }}
                 >
                   <option value="">선택하세요</option>
@@ -236,33 +246,37 @@ export default function Profile() {
           </div>
 
           {/* 저장 버튼 */}
-          <div style={{ textAlign: "center", marginTop: "16px" }}>
-            <button
-              onClick={handleSaveProfile}
-              style={{
-                padding: "10px 20px", backgroundColor: "#28a745",
-                color: "#fff", border: "none", borderRadius: "8px",
-                fontWeight: "bold", cursor: "pointer",
-              }}
-            >
-              저장
-            </button>
-            <div style={{ marginTop: 10, color: "#555" }}>{saveStatus}</div>
-          </div>
+          {isMyProfile && (
+            <div style={{ textAlign: "center", marginTop: "16px" }}>
+              <button
+                onClick={handleSaveProfile}
+                style={{
+                  padding: "10px 20px", backgroundColor: "#28a745",
+                  color: "#fff", border: "none", borderRadius: "8px",
+                  fontWeight: "bold", cursor: "pointer",
+                }}
+              >
+                저장
+              </button>
+              <div style={{ marginTop: 10, color: "#555" }}>{saveStatus}</div>
+            </div>
+          )}
 
           {/* 로그아웃 버튼 */}
-          <div style={{ marginTop: "30px", textAlign: "center" }}>
-            <button
-              onClick={handleLogout}
-              style={{
-                padding: "10px 20px", backgroundColor: "#D90E15",
-                color: "#fff", border: "none", borderRadius: "8px",
-                fontWeight: "bold", cursor: "pointer",
-              }}
-            >
-              로그아웃
-            </button>
-          </div>
+          {isMyProfile && (
+            <div style={{ marginTop: "30px", textAlign: "center" }}>
+              <button
+                onClick={handleLogout}
+                style={{
+                  padding: "10px 20px", backgroundColor: "#D90E15",
+                  color: "#fff", border: "none", borderRadius: "8px",
+                  fontWeight: "bold", cursor: "pointer",
+                }}
+              >
+                로그아웃
+              </button>
+            </div>
+          )}
         </div>
       </main>
     </>
