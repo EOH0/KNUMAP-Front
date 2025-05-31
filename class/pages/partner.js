@@ -49,7 +49,7 @@ export default function Partner() {
 
   return (
     <>
-        <header className={styles.header}>
+      <header className={styles.header}>
         <div className={styles.logo} onClick={() => router.push("/")}>KNUMAP</div>
         <nav className={styles.menu}>
           <button onClick={() => router.push("/partner")}>제휴</button>
