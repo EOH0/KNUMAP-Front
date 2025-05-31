@@ -22,18 +22,18 @@ export default function Profile() {
   const [saveStatus, setSaveStatus] = useState("");
 
   const collegeDepartments = {
-    "사회과학대": [
+    "사회과학대학": [
       "정치외교학과", "지리학과", "사회학과", "심리학과",
       "미디어커뮤니케이션학과", "사회과학대학 자율전공학부", "사회복지학부"
     ],
-    "치과대": ["치과대학"],
-    "인문대": [
+    "치과대학": ["치과대학"],
+    "인문대학": [
       "영어영문학과", "독어독문학과", "사학과", "국어국문학과", "고고인류학과",
       "불어불문학과", "일어일문학과", "노어노문학과", "중어중문학과", "철학과", "한문학과"
     ],
-    "IT대": ["전기공학과", "컴퓨터학부", "전자공학부", "전자공학부 인공지능"],
-    "행정대": ["행정학부"],
-    "생활과학대": ["식품영양학과", "의류학과", "아동학부"]
+    "IT대학": ["전기공학과", "컴퓨터학부", "전자공학부", "전자공학부 인공지능"],
+    "행정대학": ["행정학부"],
+    "생활과학대학": ["식품영양학과", "의류학과", "아동학부"]
   };
   const collegeOptions = Object.keys(collegeDepartments);
 
@@ -242,7 +242,7 @@ export default function Profile() {
                   }}
                 >
                   <option value="">선택하세요</option>
-                  {collegeDepartments[selectedCollege].map((dept) => (
+                  {collegeDepartments[selectedCollege]?.map((dept) => (
                     <option key={dept} value={dept}>{dept}</option>
                   ))}
                 </select>
