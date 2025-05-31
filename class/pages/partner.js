@@ -88,8 +88,8 @@ export default function Partner() {
 
                 <div className={cardStyles.cardRight}>
                   <img
-                    src={/data/partner/images/${p.name.replace(/\s/g, "_")}.jpg}
-                    alt={${p.name} 썸네일}
+                    src={'/data/partner/images/${p.name.replace(/\s/g, "_")}.jpg'}
+                    alt={'${p.name} 썸네일'}
                     onError={(e) => {
                       e.target.onerror = null;
                       e.target.src = "/data/image.jpg"; // 기본 이미지로 대체
