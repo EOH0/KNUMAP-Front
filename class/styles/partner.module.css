@@ -69,8 +69,8 @@
 }
 
 .partnerLinks img {
-  width: 24px;  /* ⬇️ 정사각형 크기 줄임 */
-  height: 24px;
+  width: 10px;  /* ⬇️ 정사각형 크기 줄임 */
+  height: 10px;
   cursor: pointer;
   transition: transform 0.2s;
 }
