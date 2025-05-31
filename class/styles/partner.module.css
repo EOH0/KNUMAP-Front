@@ -11,7 +11,7 @@
 .partnerCard {
   display: flex;
   justify-content: space-between;
-  align-items: stretch; /* ✅ 높이 정렬을 위해 stretch */
+  align-items: stretch;
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 12px;
@@ -34,8 +34,6 @@
 .cardRight {
   width: 100px;
   margin-left: 16px;
-
-  /* ✅ 수직 정렬 */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -44,7 +42,7 @@
 
 .cardRight img:first-child {
   width: 100%;
-  height: 80px;
+  height: 100px; /* ⬆️ 이미지 키움 */
   border-radius: 10px;
   object-fit: cover;
   object-position: center;
@@ -66,13 +64,13 @@
 
 .partnerLinks {
   display: flex;
-  gap: 10px; /* ✅ 인스타-카카오 사이 간격 */
+  gap: 10px;
   justify-content: flex-end;
 }
 
 .partnerLinks img {
-  width: 26px;
-  height: 26px;
+  width: 24px;  /* ⬇️ 정사각형 크기 줄임 */
+  height: 24px;
   cursor: pointer;
   transition: transform 0.2s;
 }
@@ -83,12 +81,13 @@
 
 .searchButton {
   margin-top: 10px;
-  padding: 6px 12px;
+  padding: 4px 10px; /* ⬇️ 크기 줄임 */
+  font-size: 13px;
   background-color: #ef3e36;
   color: white;
   border: none;
   border-radius: 8px;
-  font-weight: bold;
+  font-weight: 600;
   cursor: pointer;
   transition: background 0.2s ease;
 }
