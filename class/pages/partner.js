@@ -88,9 +88,12 @@ export default function Partner() {
 
                 <div className={cardStyles.cardRight}>
                   <img
-                    src={`https://place.map.kakao.com/m/${p.url.split("/").pop()}`}
-                    alt="장소 이미지"
-                    onError={(e) => { e.target.style.display = "none"; }}
+                    src={`/data/partner/images/${p.name.replace(/\s/g, "_")}.jpg`}
+                    alt={`${p.name} 썸네일`}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "/data/image.jpg"; // 기본 이미지로 대체
+                    }}
                   />
                 </div>
               </div>

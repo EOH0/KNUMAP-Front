@@ -424,3 +424,47 @@
 .searchBtn:hover {
   background-color: #b50a11;
 }
+
+.placeCard.highRating {
+  background-color: #fff6f6; /* 옅은 핑크 */
+}
+.placeCard.lowRating {
+  background-color: #f9f9f9; /* 연한 회색 */
+}
+
+.newBadge {
+  background-color: #d90e15;
+  color: white;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 8px;
+  margin-left: 6px;
+  vertical-align: middle;
+  font-weight: bold;
+}
+
+.placeCard {
+  transition: box-shadow 0.3s ease;
+}
+
+.placeCard:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.starBtn {
+  color: #ccc;
+  font-size: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.starBtn:hover {
+  color: #D90E15;
+  transform: scale(1.2);
+}
+
+.favOn {
+  color: #D90E15;
+}

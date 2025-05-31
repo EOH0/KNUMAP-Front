@@ -6,6 +6,7 @@ import { UserContext } from "../lib/UserContext";
 import { signOut } from "firebase/auth";
 import { auth } from "../lib/firebase";
 import Hero from "../components/Hero";
+import Fuse from "fuse.js";
 
 export default function Home() {
   const router = useRouter();
@@ -21,6 +22,39 @@ export default function Home() {
   const [showFilters, setShowFilters] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+
+  const fuse = new Fuse(places, {
+    keys: ["name", "위치", "분야"], // 검색 대상 필드 지정
+    threshold: 0.3, // 정확도 (낮을수록 엄격)
+  });
+
+  const [sortOption, setSortOption] = useState(""); // "찜순" | "리뷰순"
+
+  const sortPlaces = (places) => {
+    const sorted = [...places];
+    if (sortOption === "찜순") {
+      sorted.sort((a, b) =>
+        favorites.filter(f => f.url === b.url).length - favorites.filter(f => f.url === a.url).length
+      );
+    } else if (sortOption === "리뷰순") {
+      sorted.sort((a, b) =>
+        reviews.filter(r => r.placeId === b.url).length - reviews.filter(r => r.placeId === a.url).length
+      );
+    } else if (sortOption === "평점순") {
+      sorted.sort((a, b) =>
+        getAverageRating(b.url) - getAverageRating(a.url)
+      );
+    } else if (sortOption === "이름순") {
+      sorted.sort((a, b) => a.name.localeCompare(b.name, 'ko', { sensitivity: 'base' }));
+    } else if (sortOption === "최신순") {
+      sorted.sort((a, b) =>
+        new Date(b.createdAt) - new Date(a.createdAt)
+      );
+    }
+    return sorted;
+  };
+
+  
 
   useEffect(() => {
     fetch("/data/places.json")
@@ -64,7 +98,18 @@ export default function Home() {
     }
   }, [favorites, user]);
 
+  
   useEffect(() => {
+    const filtered = places.filter((p) =>
+      (!selectedLocation || p.위치 === selectedLocation) &&
+      (!selectedCategory || p.분야 === selectedCategory)
+    );
+    const sorted = sortPlaces(filtered);
+    setFilteredPlaces(sorted);
+  }, [places, sortOption, selectedLocation, selectedCategory]);
+
+
+useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 300) {
         setShowNavbar(true);
@@ -76,10 +121,7 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    // 처음엔 전체 표시
-    setFilteredPlaces(places);
-  }, [places]);
+  
   
   const normalize = (str) =>
   str.toLowerCase().replace(/\s+/g, "").replace(/[^a-z0-9가-힣]/gi, "");
@@ -125,13 +167,18 @@ export default function Home() {
 
   const handleSearch = () => {
     if (!searchQuery.trim()) {
-      // 검색어 없으면 필터만 적용
       const filtered = places.filter((p) =>
         (!selectedLocation || p.위치 === selectedLocation) &&
         (!selectedCategory || p.분야 === selectedCategory)
       );
-      return setFilteredPlaces(filtered);
+      setFilteredPlaces(filtered);
+      return;
     }
+
+    const fuse = new Fuse(places, {
+      keys: ["name", "위치", "분야"],
+      threshold: 0.3,
+    });
 
     const results = fuse.search(searchQuery).map(r => r.item);
     const filtered = results.filter((p) =>
@@ -141,6 +188,12 @@ export default function Home() {
     setFilteredPlaces(filtered);
   };
 
+  const isRecent = (createdAt) => {
+    const created = new Date(createdAt);
+    const now = new Date();
+    const diffInDays = (now - created) / (1000 * 60 * 60 * 24);
+    return diffInDays <= 7; // 최근 7일이면 "NEW"
+  };
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") handleSearch();
@@ -261,6 +314,27 @@ export default function Home() {
         </button>
         </div>
 
+        <div style={{ marginTop: "12px", textAlign: "center" }}>
+          <select
+            value={sortOption}
+            onChange={(e) => setSortOption(e.target.value)}
+            style={{
+              padding: "6px 10px",
+              borderRadius: "12px",
+              border: "1px solid #ddd",
+              fontSize: "14px"
+            }}
+          >
+            <option value="">정렬 없음</option>
+            <option value="찜순">찜 많은 순</option>
+            <option value="리뷰순">리뷰 많은 순</option>
+<option value="평점순">평점 높은 순</option>
+<option value="이름순">이름순</option>
+<option value="최신순">최신 등록순</option>
+          </select>
+        </div>
+
+
         {showFilters && (
           <div
             style={{
@@ -346,35 +420,43 @@ export default function Home() {
             ) : (
               filteredPlaces.map((place) => {
                 const avgRating = getAverageRating(place.url);
+                const ratingClass =
+                  avgRating >= 4.0 ? styles.highRating :
+                  avgRating < 3 ? styles.lowRating :
+                  "";
+                
                 return (
-                  <div className={styles.placeCard} key={place.url}>
+                  <div className={`${styles.placeCard} ${ratingClass}`} key={`${place.name}_${place.위치}`}>
                     <div className={styles.placeHeader}>
                       <img
-                        src={`/data/image/${place.name.replace(/\s/g, "_").replace(/\//g, "_")}.jpg`}
+                        src={`/data/image/${place.name.replace(/\s/g, "_")}.jpg`}
                         alt="장소 이미지"
                         className={styles.placeLogo}
                         onError={(e) => { e.target.onerror = null; e.target.src = "/data/image.jpg"; }}
                       />
                       <div>
                         <div className={styles.placeName}>{place.name}</div>
-                        {/* ✅ 여기: 전화번호 추가 */}
-                        <div style={{ marginTop: 4 }}>
-                          {place.phone ? (
-                            <a
-                              href={`tel:${place.phone}`}
-                              style={{ color: "#555", fontSize: "14px", textDecoration: "none" }}
-                            >
-                              📞 {place.phone}
-                            </a>
-                          ) : (
-                            <span style={{ color: "#999", fontSize: "14px" }}>전화번호 없음</span>
+                          {place.name}
+                          {place.createdAt && isRecent(place.createdAt) && (
+                            <span className={styles.newBadge}>NEW</span>
                           )}
-                        </div>
+                          {/* ✅ 여기: 전화번호 추가 */}
+                          <div style={{ marginTop: 4 }}>
+                            {place.phone ? (
+                              <a
+                                href={`tel:${place.phone}`}
+                                style={{ color: "#555", fontSize: "14px", textDecoration: "none" }}
+                              >
+                                📞 {place.phone}
+                              </a>
+                            ) : (
+                              <span style={{ color: "#999", fontSize: "14px" }}>전화번호 없음</span>
+                            )}
+                          </div>
                         <div className={styles.placeType}>{place.type}</div>
                       </div>
                       <button
-                        className={styles.starBtn}
-                        style={{ color: isFavorite(place.url) ? "#D90E15" : "#ccc" }}
+                        className={`${styles.starBtn} ${isFavorite(place.url) ? styles.favOn : ""}`}
                         onClick={() => toggleFavorite(place)}
                       >★</button>
                     </div>
@@ -404,10 +486,16 @@ export default function Home() {
                             alert("로그인이 필요합니다.");
                             return;
                           }
-                          if (hasUserReviewed(place.url)) {
-                            alert("이미 이 장소에 리뷰를 남기셨습니다.");
+                          if (!user) {
+                            alert("로그인이 필요합니다.");
                             return;
                           }
+
+                          if (hasUserReviewed(place.url)) {
+                            const proceed = confirm("이미 리뷰를 작성하셨습니다. 수정하시겠습니까?");
+                            if (!proceed) return;
+                          }
+
                           router.push({ pathname: "/review", query: { placeId: place.url } });
                         }}
                       >지도 리뷰</button>

@@ -84,7 +84,7 @@ export default function Favorite() {
       </header>
 
       <main className={mainStyles.main}>
-        <div className={mainStyles.pageTitle}>⭐ 즐겨찾기</div>
+        <div className={mainStyles.pageTitle}>즐겨찾기</div>
         <div className={styles.favoriteGrid}>
           {favorites.length === 0 ? (
             <div style={{ color: "#bbb", marginTop: 20, textAlign: "center", gridColumn: "1/-1" }}>
@@ -104,6 +104,15 @@ export default function Favorite() {
                     />
                     <div>
                       <div className={styles.placeName}>{place.name}</div>
+                      {place.phone ? (
+                        <div style={{ marginTop: 4, fontSize: 14, color: "#555" }}>
+                          📞 {place.phone}
+                        </div>
+                      ) : (
+                        <div style={{ marginTop: 4, fontSize: 14, color: "#999" }}>
+                          전화번호 없음
+                        </div>
+                      )}
                       <div className={styles.placeType}>{place.type}</div>
                     </div>
                     <button
