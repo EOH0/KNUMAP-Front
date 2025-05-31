@@ -187,6 +187,11 @@ export default function Profile() {
           <div style={{ fontSize: "18px", lineHeight: "2.2", textAlign: "left", marginBottom: "20px" }}>
             <div>
               <label style={{ fontWeight: "bold" }}>이름</label><br />
+              {isMyProfile && user?.uid && (
+                <div style={{ marginTop: "4px", fontSize: "12px", color: "#777" }}>
+                  내 UID: <code>{user.uid}</code>
+                </div>
+              )}
               <input
                 type="text"
                 value={name}
