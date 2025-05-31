@@ -33,5 +33,12 @@
     "rating": 5,
     "text": "한번도 가본 적 없지만 좋을 거 같음",
     "date": "2025-05-30T14:31:11.643Z"
+  },
+  {
+    "placeId": "http://place.map.kakao.com/27392978",
+    "user": "123@gmail.com",
+    "rating": 4,
+    "text": "ㅁㄴㄹㅇㅁㄴㅇㄻㄴㄹ",
+    "date": "2025-05-31T00:45:18.182Z"
   }
 ]

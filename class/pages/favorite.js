@@ -42,7 +42,7 @@ export default function Favorite() {
   };
 
   const getImagePath = (name) => {
-    return `/data/image/${name.replace(/\s/g, "_").replace(/\//g, "_")}.jpg`;
+    return `/data/image/${name.replace(/\s/g, "_").replace(/\z//g, "_")}.jpg`;
   };
 
   const getAverageRating = (placeId) => {
