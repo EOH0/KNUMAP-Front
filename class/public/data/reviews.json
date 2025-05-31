@@ -33,5 +33,33 @@
     "rating": 5,
     "text": "한번도 가본 적 없지만 좋을 거 같음",
     "date": "2025-05-30T14:31:11.643Z"
+  },
+  {
+    "placeId": "http://place.map.kakao.com/1290987981",
+    "user": "jinjin@gmail.com",
+    "rating": 5,
+    "text": "빈트 조하요 짱짱짱",
+    "date": "2025-05-31T00:52:22.823Z"
+  },
+  {
+    "placeId": "http://place.map.kakao.com/2030860635",
+    "user": "jinjin@gmail.com",
+    "rating": 5,
+    "text": "말차라떼드세요요요요",
+    "date": "2025-05-31T00:53:28.852Z"
+  },
+  {
+    "placeId": "http://place.map.kakao.com/664679576",
+    "user": "jinjin@gmail.com",
+    "rating": 5,
+    "text": "아이스크림 진짜 맛있어요 ㅊㅊ할게욥",
+    "date": "2025-05-31T00:54:15.014Z"
+  },
+  {
+    "placeId": "http://place.map.kakao.com/26224440",
+    "user": "jinjin@gmail.com",
+    "rating": 5,
+    "text": "레전드 반미리코 당근피자 드세요 ㅋㅋ",
+    "date": "2025-05-31T00:55:04.606Z"
   }
 ]
