@@ -13,7 +13,6 @@ export default function Partner() {
   const [partnerData, setPartnerData] = useState([]);
   const [filteredPartners, setFilteredPartners] = useState([]);
 
-  // 사용자 단과대학 정보 불러오기
   useEffect(() => {
     const fetchUserCollege = async () => {
       if (!user) return;
@@ -30,7 +29,6 @@ export default function Partner() {
     fetchUserCollege();
   }, [user]);
 
-  // 제휴 JSON 불러오기
   useEffect(() => {
     fetch("/data/제휴정보.json")
       .then((res) => res.json())
@@ -38,7 +36,6 @@ export default function Partner() {
       .catch((err) => console.error("제휴 정보 로딩 실패:", err));
   }, []);
 
-  // 사용자 단대에 맞는 항목 필터링
   useEffect(() => {
     if (!userCollege || partnerData.length === 0) return;
     const filtered = partnerData.filter((p) => p.단대 === userCollege);
@@ -74,13 +71,14 @@ export default function Partner() {
             {filteredPartners.map((p, idx) => (
               <div key={idx} className={cardStyles.partnerCard}>
                 <div className={cardStyles.cardLeft}>
-                  <div className={cardStyles.partnerName}>{p.name}</div>
-                  <div className={cardStyles.partnerDetail}>
-                    <span>⏰ 기간: {p.period}</span><br />
-                    <span>👤 대상: {p.who}</span>
+                  <div>
+                    <div className={cardStyles.partnerName}>{p.name}</div>
+                    <div className={cardStyles.partnerDetail}>
+                      <span>⏰ 기간: {p.period}</span><br />
+                      <span>👤 대상: {p.who}</span>
+                    </div>
                   </div>
 
-                  {/* ⬇️ 지도에서 보기 버튼 */}
                   <button
                     className={cardStyles.searchButton}
                     onClick={() => router.push(`/map?keyword=${encodeURIComponent(p.name)}`)}
@@ -98,8 +96,6 @@ export default function Partner() {
                       e.target.src = "/data/image.jpg";
                     }}
                   />
-
-                  {/* ⬇️ 아이콘 위치를 이미지 아래로 */}
                   <div className={cardStyles.partnerLinks}>
                     <a href={p.url} target="_blank" rel="noreferrer">
                       <img src="/icons/kakao.png" alt="카카오맵" />
