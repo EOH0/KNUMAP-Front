@@ -144,6 +144,13 @@ export default function Home() {
     return ratings.reduce((a, b) => a + b, 0) / ratings.length;
   };
 
+  const getSafeImageName = (name) => {
+    return name
+      .trim()
+      .replace(/\s+/g, "_")        // 띄어쓰기 → _
+      .replace(/[^\w가-힣ㄱ-ㅎㅏ-ㅣ_]/g, ""); // 특수문자 제거
+  };
+
   const hasUserReviewed = (placeId) => {
     if (!user) return false;
     return userReviews.some(r => r.placeId === placeId);
@@ -433,7 +440,7 @@ export default function Home() {
                   <div className={`${styles.placeCard} ${ratingClass}`} key={`${place.name}_${place.위치}`}>
                     <div className={styles.placeHeader}>
                       <img
-                        src={`/data/image/${place.name.replace(/\s/g, "_")}.jpg`}
+                        src={`/data/image/${getSafeImageName(place.name)}.jpg`}
                         alt="장소 이미지"
                         className={styles.placeLogo}
                         onError={(e) => { e.target.onerror = null; e.target.src = "/data/image.jpg"; }}

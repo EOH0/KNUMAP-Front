@@ -96,7 +96,7 @@ export default function Partner() {
                 <div className={cardStyles.cardRight}>
                   <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                     <img
-                      src={`/data/partner/images/${p.name.replace(/\s/g, "_")}.jpg`}
+                      src={`/data/images${p.name.replace(/\s/g, "_")}.jpg`}
                       alt={`${p.name} 썸네일`}
                       onError={(e) => {
                         e.target.onerror = null;
