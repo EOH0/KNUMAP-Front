@@ -21,9 +21,9 @@ export default function Favorite() {
   }, [favoritesKey]);
 
   useEffect(() => {
-    fetch("/data/reviews.json")
+    fetch("/api/loadReviews")
       .then((res) => res.json())
-      .then((data) => setReviews(data))
+      .then((data) => setReviews(data.reviews || []))
       .catch(() => setReviews([]));
   }, []);
 
@@ -49,6 +49,10 @@ export default function Favorite() {
     const ratings = reviews.filter(r => r.placeId === placeId).map(r => r.rating);
     if (ratings.length === 0) return 0;
     return ratings.reduce((a, b) => a + b, 0) / ratings.length;
+  };
+
+  const getReviewCount = (placeId) => {
+    return reviews.filter(r => r.placeId === placeId).length;
   };
 
   return (
@@ -93,6 +97,8 @@ export default function Favorite() {
           ) : (
             favorites.map((place) => {
               const avgRating = getAverageRating(place.url);
+              const reviewCount = getReviewCount(place.url);
+
               return (
                 <div className={styles.placeCard} key={place.url}>
                   <div className={styles.placeHeader}>
@@ -124,18 +130,27 @@ export default function Favorite() {
                       ★
                     </button>
                   </div>
+
                   <div className={styles.placeInfo}>
-                    <div>
-                      리뷰 수 <span className={styles.infoNum}>{reviews.filter(r => r.placeId === place.url).length}명</span>
+                    <div style={{ whiteSpace: "nowrap" }}>
+                      리뷰 수 {reviewCount}명
                     </div>
                     <div>
                       평균 평점 <span className={styles.infoNum}>
+                        {avgRating.toFixed(1)} / 5{" "}
                         {[1, 2, 3, 4, 5].map(num => (
-                          <span key={num} style={{ color: avgRating >= num ? "#D90E15" : "#ccc", fontSize: 18 }}>★</span>
+                          <span
+                            key={num}
+                            style={{
+                              color: avgRating >= num ? "#D90E15" : "#ccc",
+                              fontSize: 18
+                            }}
+                          >★</span>
                         ))}
                       </span>
                     </div>
                   </div>
+
                   <div className={styles.placeFooter}>
                     <button className={styles.linkBtn} onClick={() => window.open(place.url, "_blank")}>홈페이지</button>
                     <button className={styles.linkBtn} onClick={() => router.push({ pathname: "/review", query: { placeId: place.url } })}>지도 리뷰</button>

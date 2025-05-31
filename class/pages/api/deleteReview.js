@@ -1,47 +1,24 @@
-import fs from "fs";
-import path from "path";
+// pages/api/deleteReview.js
+import { db } from "../../lib/firebase";
+import { doc, deleteDoc } from "firebase/firestore";
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ message: "허용되지 않은 요청입니다." });
-  }
+  if (req.method !== "POST") return res.status(405).end();
 
   const { placeId, user } = req.body;
+
   if (!placeId || !user) {
-    return res.status(400).json({ message: "요청 데이터가 누락되었습니다." });
+    return res.status(400).json({ message: "필수 정보 누락" });
   }
 
-  const reviewsPath = path.join(process.cwd(), "public/data/reviews.json");
-  const statsPath = path.join(process.cwd(), "public/data/reviewStats.json");
+  try {
+    // Firestore에 저장한 문서 ID와 동일한 방식으로 안전하게 인코딩
+    const docId = encodeURIComponent(`${placeId}_${user}`);
 
-  if (!fs.existsSync(reviewsPath)) return res.status(404).json({ message: "리뷰 데이터 없음" });
-
-  let reviews = JSON.parse(fs.readFileSync(reviewsPath, "utf8"));
-  const reviewIndex = reviews.findIndex((r) => r.placeId === placeId && r.user === user);
-
-  if (reviewIndex === -1) {
-    return res.status(404).json({ message: "해당 리뷰가 없습니다." });
+    await deleteDoc(doc(db, "reviews", docId));
+    res.status(200).json({ message: "리뷰 삭제 완료" });
+  } catch (err) {
+    console.error("리뷰 삭제 실패:", err);
+    res.status(500).json({ message: "서버 오류" });
   }
-
-  const deleted = reviews.splice(reviewIndex, 1)[0];
-  fs.writeFileSync(reviewsPath, JSON.stringify(reviews, null, 2));
-
-  // 통계 업데이트
-  let stats = {};
-  if (fs.existsSync(statsPath)) {
-    stats = JSON.parse(fs.readFileSync(statsPath, "utf8"));
-  }
-
-  if (stats[placeId]) {
-    stats[placeId].totalRating -= deleted.rating;
-    stats[placeId].reviewCount -= 1;
-
-    if (stats[placeId].reviewCount === 0) {
-      delete stats[placeId];
-    }
-  }
-
-  fs.writeFileSync(statsPath, JSON.stringify(stats, null, 2));
-
-  return res.status(200).json({ message: "리뷰 삭제 완료" });
 }

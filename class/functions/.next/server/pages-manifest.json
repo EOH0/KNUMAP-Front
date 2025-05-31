@@ -1,0 +1,19 @@
+{
+  "/_app": "pages/_app.js",
+  "/api/deleteReview": "pages/api/deleteReview.js",
+  "/_error": "pages/_error.js",
+  "/api/loadReviews": "pages/api/loadReviews.js",
+  "/api/reportReview": "pages/api/reportReview.js",
+  "/api/saveReview": "pages/api/saveReview.js",
+  "/chat": "pages/chat.html",
+  "/favorite": "pages/favorite.html",
+  "/login": "pages/login.html",
+  "/": "pages/index.html",
+  "/partner": "pages/partner.html",
+  "/profile": "pages/profile.html",
+  "/review": "pages/review.html",
+  "/signup": "pages/signup.html",
+  "/social": "pages/social.html",
+  "/_document": "pages/_document.js",
+  "/404": "pages/404.html"
+}

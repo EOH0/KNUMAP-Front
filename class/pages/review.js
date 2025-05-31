@@ -1,4 +1,3 @@
-// review.js
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
@@ -18,8 +17,18 @@ export default function Review() {
   const [existingReviews, setExistingReviews] = useState([]);
   const [averageRating, setAverageRating] = useState(0);
   const [isEdit, setIsEdit] = useState(false);
-
   const [placeName, setPlaceName] = useState("");
+
+  const formatDateKoreanStyle = (timestamp) => {
+    if (!timestamp?.toDate) return "알 수 없음";
+    const date = timestamp.toDate();
+    return date.toLocaleDateString("ko-KR", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      weekday: "short"
+    });
+  };
 
   const loadPlaceName = async () => {
     try {
@@ -33,29 +42,20 @@ export default function Review() {
     }
   };
 
-  useEffect(() => {
-    if (placeId && user) {
-      loadPlaceName();
-      loadReviews();
-    }
-  }, [placeId, user]);
-
   const loadReviews = async () => {
-    if (!placeId) return;
     try {
-      const res = await fetch("/data/reviews.json");
+      const res = await fetch(`/api/loadReviews?placeId=${encodeURIComponent(placeId)}`);
       const data = await res.json();
-      const filtered = data.filter((r) => r.placeId === placeId);
-      setExistingReviews(
-        filtered.sort((a, b) => (a.user === user.email ? -1 : 1))
-      );
+      const reviews = Array.isArray(data.reviews) ? data.reviews : [];
+      const filtered = reviews.sort((a, b) => (a.user === user.email ? -1 : 1));
+      setExistingReviews(filtered);
 
       if (filtered.length) {
         const avg = filtered.reduce((sum, r) => sum + r.rating, 0) / filtered.length;
         setAverageRating(avg.toFixed(1));
       }
 
-      const myReview = filtered.find((r) => r.user === user?.email);
+      const myReview = filtered.find((r) => r.user === user.email);
       if (myReview) {
         setRating(myReview.rating);
         setReviewText(myReview.text);
@@ -66,55 +66,61 @@ export default function Review() {
         setIsEdit(false);
       }
     } catch (err) {
-      console.error("리뷰 불러오기 실패:", err);
+      console.error("리뷰 로딩 실패:", err);
       setExistingReviews([]);
       setAverageRating(0);
     }
   };
 
+  useEffect(() => {
+    if (placeId && user) {
+      loadPlaceName();
+      loadReviews();
+    }
+  }, [placeId, user]);
+
   const handleSubmit = async () => {
-    if (!rating || rating < 1 || rating > 5) {
-      alert("1~5 사이의 평점을 선택해주세요.");
-      return;
-    }
-    if (!reviewText.trim() || reviewText.length < 10) {
-      alert("리뷰는 최소 10자 이상 입력해주세요.");
-      return;
-    }
-    const reviewData = {
-      placeId,
-      user: user.email,
-      rating,
-      text: reviewText.trim(),
-    };
-    try {
-      const res = await fetch("/api/saveReview", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(reviewData),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        alert(data.message);
-        await loadReviews();
-      } else {
-        alert("리뷰 저장 실패: " + data.message);
-      }
-    } catch (err) {
-      alert("서버 오류로 리뷰 저장 실패");
-      console.error(err);
-    }
+  if (!rating || rating < 1 || rating > 5) return alert("1~5 사이의 평점을 선택해주세요.");
+  if (!reviewText.trim() || reviewText.length < 10) return alert("리뷰는 최소 10자 이상 입력해주세요.");
+
+  const reviewData = {
+    placeId,
+    user: user.email,
+    rating,
+    text: reviewText.trim(),
   };
 
-  if (!user) {
-    return <p style={{ padding: 40 }}>로그인이 필요합니다.</p>;
+  try {
+    const res = await fetch("/api/saveReview", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(reviewData),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      alert(data.message);
+      await loadReviews(); // 리뷰 페이지 내 새로고침
+      router.replace("/"); // ✅ 메인으로 이동 (뒤로가기 없음)
+    } else {
+      alert("리뷰 저장 실패: " + data.message);
+    }
+  } catch (err) {
+    alert("서버 오류로 리뷰 저장 실패");
+    console.error(err);
   }
+};
+
+  const handleLogout = async () => {
+    await signOut(auth);
+    alert("로그아웃 되었습니다.");
+    router.push("/");
+  };
+
+  if (!user) return <p style={{ padding: 40 }}>로그인이 필요합니다.</p>;
 
   return (
     <>
-      <Head>
-        <title>리뷰 남기기 - {placeName}</title>
-      </Head>
+      <Head><title>리뷰 남기기 - {placeName}</title></Head>
 
       <header className={styles.header}>
         <div className={styles.logo} onClick={() => router.push("/")}>KNUMAP</div>
@@ -140,11 +146,7 @@ export default function Review() {
           리뷰 남기기 {placeName ? `- ${placeName}` : ""}
         </div>
 
-        <div style={{
-          padding: 30, background: "#fff", borderRadius: 12,
-          maxWidth: 600, margin: "0 auto 40px",
-          boxShadow: "0 0 10px rgba(0,0,0,0.1)"
-        }}>
+        <div style={{ padding: 30, background: "#fff", borderRadius: 12, maxWidth: 600, margin: "0 auto 40px", boxShadow: "0 0 10px rgba(0,0,0,0.1)" }}>
           {averageRating > 0 && (
             <div style={{ textAlign: "center", marginBottom: 20, fontSize: 18 }}>
               평균 평점: <strong>{averageRating}</strong> / 5.0
@@ -172,9 +174,7 @@ export default function Review() {
                   margin: "0 6px",
                   transition: "transform 0.2s",
                 }}
-              >
-                ★
-              </span>
+              >★</span>
             ))}
           </div>
 
@@ -184,48 +184,40 @@ export default function Review() {
             placeholder="리뷰 내용을 입력하세요 (10자 이상, 300자 이하)"
             rows={5}
             maxLength={300}
-            style={{
-              width: "100%", padding: 12, border: "1px solid #ccc",
-              borderRadius: 8, resize: "vertical", fontSize: 14, marginBottom: 10,
-            }}
+            style={{ width: "100%", padding: 12, border: "1px solid #ccc", borderRadius: 8, resize: "vertical", fontSize: 14, marginBottom: 10 }}
           />
-          <p style={{ fontSize: 12, color: "#999", marginBottom: 20 }}>
-            {reviewText.length} / 300자
-          </p>
+          <p style={{ fontSize: 12, color: "#999", marginBottom: 20 }}>{reviewText.length} / 300자</p>
 
           <button
             onClick={handleSubmit}
-            style={{
-              width: "100%", padding: "12px 0",
-              backgroundColor: "#D90E15", color: "#fff",
-              border: "none", borderRadius: 6,
-              fontSize: 16, cursor: "pointer", fontWeight: "bold"
-            }}
+            style={{ width: "100%", padding: "12px 0", backgroundColor: "#D90E15", color: "#fff", border: "none", borderRadius: 6, fontSize: 16, cursor: "pointer", fontWeight: "bold" }}
           >
             {isEdit ? "리뷰 수정하기" : "리뷰 제출하기"}
           </button>
         </div>
 
         {existingReviews.length > 0 && (
-          <div style={{
-            maxWidth: 600, margin: "0 auto", background: "#fff",
-            padding: 30, borderRadius: 12, boxShadow: "0 0 10px rgba(0,0,0,0.1)"
-          }}>
+          <div style={{ maxWidth: 600, margin: "0 auto", background: "#fff", padding: 30, borderRadius: 12, boxShadow: "0 0 10px rgba(0,0,0,0.1)" }}>
             <h4>📋 사용자 리뷰 목록</h4>
             <ul style={{ listStyle: "none", padding: 0 }}>
               {existingReviews.map((r, idx) => (
-                <li key={idx} style={{
-                  background: r.user === user.email ? "#e8f4ff" : "#f9f9f9",
-                  padding: 16, borderRadius: 8, marginBottom: 12,
-                  boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
-                  border: r.user === user.email ? "1px solid #3399ff" : "none"
-                }}>
+                <li
+                  key={idx}
+                  style={{
+                    background: r.user === user.email ? "#e8f4ff" : "#f9f9f9",
+                    padding: 16,
+                    borderRadius: 8,
+                    marginBottom: 12,
+                    boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
+                    border: r.user === user.email ? "1px solid #3399ff" : "none"
+                  }}
+                >
                   <div style={{ fontWeight: "bold" }}>
                     {r.user === user.email ? "📝 내 리뷰" : r.user} - {r.rating}점
                   </div>
                   <div style={{ fontSize: 14, color: "#555" }}>{r.text}</div>
                   <div style={{ fontSize: 12, color: "#999", marginTop: 4 }}>
-                    작성일: {r.date ? new Date(r.date).toLocaleDateString() : "알 수 없음"}
+                    작성일: {formatDateKoreanStyle(r.date)}
                   </div>
                   <div style={{ marginTop: 8 }}>
                     {r.user === user.email ? (
@@ -241,13 +233,8 @@ export default function Review() {
                             await loadReviews();
                           }
                         }}
-                        style={{
-                          fontSize: 12, color: "#d00", background: "none",
-                          border: "none", cursor: "pointer", textDecoration: "underline"
-                        }}
-                      >
-                        삭제
-                      </button>
+                        style={{ fontSize: 12, color: "#d00", background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}
+                      >삭제</button>
                     ) : (
                       <button
                         onClick={async () => {
@@ -255,23 +242,13 @@ export default function Review() {
                             await fetch("/api/reportReview", {
                               method: "POST",
                               headers: { "Content-Type": "application/json" },
-                              body: JSON.stringify({
-                                placeId,
-                                reportedUser: r.user,
-                                reason: "사용자 수동 신고",
-                                timestamp: new Date().toISOString(),
-                              }),
+                              body: JSON.stringify({ placeId, reportedUser: r.user, reason: "사용자 수동 신고" }),
                             });
-                            alert("신고가 접수되었습니다. 감사합니다!");
+                            alert("신고가 접수되었습니다.");
                           }
                         }}
-                        style={{
-                          fontSize: 12, color: "#999", background: "none",
-                          border: "none", cursor: "pointer", textDecoration: "underline"
-                        }}
-                      >
-                        신고
-                      </button>
+                        style={{ fontSize: 12, color: "#999", background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}
+                      >신고</button>
                     )}
                   </div>
                 </li>
