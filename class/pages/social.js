@@ -28,6 +28,12 @@ export default function SocialPage() {
   const [loadingFriends, setLoadingFriends] = useState(true);
 
   useEffect(() => {
+    if (user === null) {
+      router.push("/login");
+    }
+  }, [user]);
+
+  useEffect(() => {
     const fetchUsers = async () => {
       try {
         const snapshot = await getDocs(collection(db, "users"));
