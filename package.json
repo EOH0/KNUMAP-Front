@@ -4,6 +4,7 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "antd": "^5.25.1",
+    "firebase": "^11.8.1",
     "graphql": "^16.11.0"
   }
 }
