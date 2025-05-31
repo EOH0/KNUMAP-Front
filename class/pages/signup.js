@@ -9,10 +9,11 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
+  const [name, setName] = useState("");
   const router = useRouter();
 
   const handleSignup = async () => {
-    if (!email || !password || !phone) {
+    if (!email || !password || !phone || !name) {
       alert("모든 필드를 입력해주세요.");
       return;
     }
@@ -22,9 +23,10 @@ export default function Signup() {
       const uid = userCredential.user.uid;
 
       await setDoc(doc(db, "users", uid), {
+        uid,
         email,
         phone,
-        uid,
+        name,
         createdAt: new Date()
       });
 
@@ -39,6 +41,13 @@ export default function Signup() {
     <div className={styles.authContainer}>
       <h2 className={styles.pageTitle}>회원가입</h2>
 
+      <input
+        className={styles.inputBox}
+        type="text"
+        placeholder="이름을 입력하세요"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
       <input
         className={styles.inputBox}
         type="email"

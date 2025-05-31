@@ -24,6 +24,8 @@ export default function SocialPage() {
   const [friendName, setFriendName] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [myFriends, setMyFriends] = useState([]);
+  const [loadingUsers, setLoadingUsers] = useState(true);
+  const [loadingFriends, setLoadingFriends] = useState(true);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -62,6 +64,47 @@ export default function SocialPage() {
 
     fetchMyFriends();
   }, [user]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const snapshot = await getDocs(collection(db, "users"));
+        const users = snapshot.docs.map(doc => ({ uid: doc.id, ...doc.data() }));
+        setAllUsers(users);
+      } catch (err) {
+        console.error("전체 사용자 불러오기 실패:", err);
+      } finally {
+        setLoadingUsers(false);
+      }
+    };
+    fetchUsers();
+  }, []);
+
+  useEffect(() => {
+    const fetchMyFriends = async () => {
+      if (!user) return;
+      try {
+        const snap = await getDoc(doc(db, "users", user.uid));
+        if (snap.exists()) {
+          const data = snap.data();
+          const friendUids = data.friends || [];
+          const friendsData = await Promise.all(
+            friendUids.map(async (fuid) => {
+              const fSnap = await getDoc(doc(db, "users", fuid));
+              return fSnap.exists() ? { uid: fuid, ...fSnap.data() } : null;
+            })
+          );
+          setMyFriends(friendsData.filter(Boolean));
+        }
+      } catch (err) {
+        console.error("친구 목록 불러오기 실패:", err);
+      } finally {
+        setLoadingFriends(false);
+      }
+    };
+    fetchMyFriends();
+  }, [user]);
+
 
   const handleAddFriend = async (target) => {
     if (!user) return alert("로그인 후 이용 가능합니다.");
@@ -113,6 +156,7 @@ export default function SocialPage() {
       <Head>
         <title>KNUMAP 소셜</title>
       </Head>
+
       <header className={styles.header}>
         <div className={styles.logo} onClick={() => router.push("/")}>KNUMAP</div>
         <nav className={styles.menu}>
@@ -144,7 +188,7 @@ export default function SocialPage() {
           )}
         </div>
       </header>
-
+      
       <main className={styles.main}>
         <section style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "40px", background: "#fff", padding: "32px", borderRadius: "16px", boxShadow: "0 0 16px rgba(0,0,0,0.05)", maxWidth: "600px", marginLeft: "auto", marginRight: "auto" }}>
           <h2 style={{ fontSize: "24px", marginBottom: "20px" }}>👥 친구 추가 (이름 자동완성)</h2>
@@ -166,6 +210,27 @@ export default function SocialPage() {
 
         <section style={{ marginTop: "40px", textAlign: "center", background: "#fff", padding: "32px", borderRadius: "16px", boxShadow: "0 0 16px rgba(0,0,0,0.05)", maxWidth: "600px", marginLeft: "auto", marginRight: "auto" }}>
           <h2 style={{ fontSize: "24px", marginBottom: "20px" }}>📋 내 친구 목록</h2>
+          {(loadingUsers || loadingFriends) && (
+            <div style={{ textAlign: "center", marginTop: "120px" }}>
+              <img
+                src="/loading-cat.png"
+                alt="로딩 중"
+                style={{
+                  width: "120px",
+                  marginBottom: "20px",
+                  animation: "bounce 1.5s infinite"
+                }}
+              />
+              <p style={{ fontSize: "18px", color: "#666" }}>😺 로딩 중이에요... 잠시만요!</p>
+
+              <style jsx>{`
+                @keyframes bounce {
+                  0%, 100% { transform: translateY(0px); }
+                  50% { transform: translateY(-10px); }
+                }
+              `}</style>
+            </div>
+          )}
           {myFriends.length === 0 ? (
             <p style={{ color: "#999" }}>아직 친구가 없습니다.</p>
           ) : (
