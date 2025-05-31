@@ -4,7 +4,7 @@ import { UserContext } from "../lib/UserContext";
 import { getDoc, doc } from "firebase/firestore";
 import { db } from "../lib/firebase";
 import styles from "../styles/Main.module.css";
-import cardStyles from "../styles/partner.module.css";
+import cardStyles from "../styles/partner.module.css"; // 👈 새 CSS 파일 분리 추천
 
 export default function Partner() {
   const user = useContext(UserContext);
@@ -71,32 +71,11 @@ export default function Partner() {
             {filteredPartners.map((p, idx) => (
               <div key={idx} className={cardStyles.partnerCard}>
                 <div className={cardStyles.cardLeft}>
-                  <div>
-                    <div className={cardStyles.partnerName}>{p.name}</div>
-                    <div className={cardStyles.partnerDetail}>
-                      <span>⏰ 기간: {p.period}</span><br />
-                      <span>👤 대상: {p.who}</span>
-                    </div>
+                  <div className={cardStyles.partnerName}>{p.name}</div>
+                  <div className={cardStyles.partnerDetail}>
+                    <span>⏰ 기간: {p.period}</span><br />
+                    <span>👤 대상: {p.who}</span>
                   </div>
-
-                  <button
-                    className={cardStyles.searchButton}
-                    onClick={() => router.push(`/map?keyword=${encodeURIComponent(p.name)}`)}
-
-                  >
-                    지도에서 보기
-                  </button>
-                </div>
-
-                <div className={cardStyles.cardRight}>
-                  <img
-                    src={'/data/partner/images/${p.name.replace(/\s/g, "_")}.jpg'}
-                    alt={'${p.name} 썸네일'}
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = "/data/image.jpg";
-                    }}
-                  />
                   <div className={cardStyles.partnerLinks}>
                     <a href={p.url} target="_blank" rel="noreferrer">
                       <img src="/icons/kakao.png" alt="카카오맵" />
@@ -106,8 +85,19 @@ export default function Partner() {
                     </a>
                   </div>
                 </div>
+
+                <div className={cardStyles.cardRight}>
+                  <img
+                    src={/data/partner/images/${p.name.replace(/\s/g, "_")}.jpg}
+                    alt={${p.name} 썸네일}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "/data/image.jpg"; // 기본 이미지로 대체
+                    }}
+                  />
+                </div>
               </div>
-            ))}
+          ))}
           </div>
         )}
       </main>
