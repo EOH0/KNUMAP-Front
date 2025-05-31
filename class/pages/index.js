@@ -409,10 +409,6 @@ export default function Home() {
                       />
                       <div>
                         <div className={styles.placeName}>{place.name}</div>
-                          {place.name}
-                          {place.createdAt && isRecent(place.createdAt) && (
-                            <span className={styles.newBadge}>NEW</span>
-                          )}
                           {/* ✅ 여기: 전화번호 추가 */}
                           <div style={{ marginTop: 4 }}>
                             {place.phone ? (
